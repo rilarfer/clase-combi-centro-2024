@@ -1,0 +1,131 @@
+\documentclass[11pt,paper=a4,answers,addpoints]{exam}
+\usepackage{graphicx,lastpage,comment}
+\usepackage{upgreek}
+\usepackage{censor}
+\censorruledepth=-.2ex
+\censorruleheight=.1ex
+\hyphenpenalty 10000
+\usepackage[paperheight=10.5in,paperwidth=8.27in,bindingoffset=0in,left=0.8in,right=1in,top=0.7in,bottom=1in,headsep=.5\baselineskip]{geometry}
+\flushbottom
+\usepackage[normalem]{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\renewcommand\ULthickness{2pt}
+\setlength\ULdepth{1.5ex}
+\renewcommand{\baselinestretch}{1}
+\pagestyle{empty}
+
+\pagestyle{headandfoot}
+\headrule
+\newcommand{\continuedmessage}{%
+  \ifcontinuation{\footnotesize Pregunta \ContinuedQuestion\ continua\ldots}{}%
+}
+\runningheader{\footnotesize Programa de Ingeniería de Sistemas}
+{\footnotesize Matemática I}
+{\footnotesize Página \thepage\ de \numpages}
+\footrule
+\footer{\footnotesize }
+{}
+{\ifincomplete{\footnotesize Pregunta \IncompleteQuestion\ continua en la siguiente página \ldots}
+  {\iflastpage{\footnotesize Final del examen}{\footnotesize Por favor vea la siguiente página\ldots}}}
+\usepackage{amsfonts,amsmath}
+\usepackage{cleveref}
+\crefname{figure}{figure}{figures}
+\crefname{question}{question}{questions}
+\renewcommand\thequestion{\arabic{question}}
+\renewcommand{\questionlabel}{\thequestion)}
+\renewcommand{\questionshook}{%
+  \setlength{\leftmargin}{0pt}%
+  \setlength{\labelwidth}{-\labelsep}%
+}
+\usepackage{amsmath}
+\decimalpoint
+\nopointsinmargin
+\pointpoints{Punto}{Punto}
+
+\marginpointname{\points}
+\pointformat{\boldmath\themarginpoints}
+\bracketedpoints
+\usepackage{quoting,xparse}
+
+\pointpoints{punto}{puntos}
+\bonuspointpoints{punto extra}{puntos extra}
+ 
+\totalformat{Pregunta \thequestion: \totalpoints puntos}
+ 
+\hqword{Pregunta}
+\hpgword{Página}
+\hpword{Puntos}
+\hsword{Puntos obtenidos}
+\htword{Total}
+\usepackage{circuitikz}
+\usepackage{color}
+\usepackage{pgfplots,graphicx}
+\usepackage{ mathrsfs}
+\newcommand{\Laplace}[1]{\ensuremath{\mathscr{L}{\left\lbrace #1\right\rbrace}}}
+\newcommand{\InvLap}[1]{\ensuremath{\mathscr{L}^{-1}{\left\lbrace #1\right\rbrace}}}
+
+\begin{document}
+%\printanswers
+\noprintanswers
+%\shadedsolutions
+%\fillwithdottedlines
+\shorthandoff{<>}
+
+\begin{center}
+  \Large \textbf{Examen de Combinatoria}
+\end{center}
+
+\vspace{5mm}
+
+\makebox[\textwidth]{Nombre:\enspace\hrulefill}
+
+\begin{questions}
+
+\section*{Parte Teórica}
+
+\question Complete la siguiente afirmación sobre el Principio de las Casillas:
+Si \( n \) objetos se distribuyen en \( m \) casillas y \( n > m \), entonces al menos una casilla contendrá más de \fillin[un] objeto.
+
+\question Seleccione la opción correcta:
+\begin{oneparchoices}
+\choice La suma de dos números pares es impar.
+\CorrectChoice La suma de dos números impares es par.
+\choice La suma de un número par y uno impar es par.
+\choice La suma de dos números pares es impar.
+\end{oneparchoices}
+
+\question Seleccione la opción correcta sobre grafos:
+\begin{oneparchoices}
+\choice Un grafo dirigido tiene aristas que no tienen dirección.
+\choice Un grafo no dirigido tiene aristas con dirección.
+\CorrectChoice Un grafo dirigido tiene aristas con dirección.
+\choice Un grafo no dirigido tiene nodos que no están conectados.
+\end{oneparchoices}
+
+\question Complete la siguiente definición del principio de multiplicación:
+El principio de multiplicación establece que si un evento puede ocurrir de \( m \) maneras y un segundo evento puede ocurrir de \( n \) maneras, entonces hay un total de \fillin[m \times n] maneras en que ambos eventos pueden ocurrir.
+
+\question Complete la siguiente afirmación sobre invarianza:
+La invarianza en combinatoria se refiere a una propiedad que \fillin[permanece] constante a lo largo de una serie de \fillin[operaciones].
+
+\section*{Parte de Desarrollo}
+
+\question[10] \textbf{Problema de Juego}
+
+A y B están jugando un juego. Comienzan con 2024 monedas dispuestas en círculo, y juegan por turnos, empezando por A. En su turno, un jugador puede retirar cualquier moneda, o si quedan dos monedas adyacentes, puede retirar ambas. Gana el jugador que saca la última moneda. Demuestra que B tiene una estrategia ganadora, no importa cómo juegue A.
+
+
+\begin{solution}
+El problema requiere analizar cómo se comporta la paridad del punto en el que se encuentra el saltamontes después de cada salto. Cada salto cambia la paridad del punto, por lo que después de un número impar de saltos, el saltamontes estará en una coordenada par. Por lo tanto, no puede llegar al punto 3, ya que 3 es impar.
+\end{solution}
+\question[10] \textbf{Problema de Conteo}
+
+En un reloj digital, la hora se muestra con cuatro dígitos desde 00:00 hasta 23:59. ¿Cuántas veces al día se muestran los cuatro dígitos pares? Justifica tu respuesta utilizando el principio de multiplicación.
+
+\begin{solution}
+Los dígitos pueden ser 0, 2, 4, 6, 8. El primer dígito (decenas de horas) puede ser 0 o 2 (2 opciones). El segundo dígito (unidades de horas) puede ser 0, 2, 4, 6, 8 (5 opciones, excepto cuando el primer dígito es 2, en cuyo caso hay 4 opciones: 0, 2, 4, 6). El tercer dígito (decenas de minutos) puede ser 0, 2, 4, 6, 8 (5 opciones). El cuarto dígito (unidades de minutos) puede ser 0, 2, 4, 6, 8 (5 opciones). Así que, en total hay \(2 \times 5 \times 5 \times 5 = 250\) combinaciones posibles de los dígitos pares en el reloj.
+\end{solution}
+\end{questions}
+
+\end{document}

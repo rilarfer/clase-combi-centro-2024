@@ -1,0 +1,178 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\graphicspath{ {./images/} }
+
+\usepackage{answers}
+\Newassociation{hint}{hintitem}{all-hints}
+\renewcommand{\solutionextension}{out}
+\renewenvironment{hintitem}[1]{\item[\bfseries #1.]}{}
+
+\usepackage{venndiagram,multicol,hyperref,graphicx,array,xskak}
+
+\begin{document}
+\title{Invarianza}
+\author{Ricardo Largaespada}
+\date{01 y 08 Junio 2024}
+
+\maketitle
+\section{Introducción}
+En esta lección vamos a estudiar el principio de la invariancia. Es decir, vamos a resolver problemas en los que, dada una transformación, existe una propiedad asociada que nunca cambia. Por ejemplo, si sumamos dos a un cierto número natural, su paridad es invariante.
+
+\begin{example}
+Siete monedas están sobre una mesa mostrando cara. Podemos elegir cualquiera de ellas y voltearla al mismo tiempo. ¿Podemos obtener todas las monedas mostrando cruz?
+\end{example}
+Solución. Cuando elegimos cuatro monedas para voltear, siempre nos enfrentamos a una de las siguientes posibilidades:
+\begin{itemize}
+    \item Todas las monedas son cara;
+    \item Tenemos tres monedas cara y una cruz;
+    \item Tenemos dos caras y dos cruces;
+    \item Tenemos una cara y tres cruces;
+    \item Todas las monedas son cruces.
+\end{itemize}
+
+En la primera posibilidad, al voltear las cuatro monedas, pasamos a tener cuatro cruces más en la configuración. En la segunda posibilidad, pasamos a tener dos cruces más. En la tercera, la cantidad de cruces no se altera. En la cuarta, perdemos dos cruces. Y en la quinta, perdemos cuatro.
+
+Es decir, si tenemos en un momento dado \( K \) cruces en la configuración, después de aplicar la transformación permitida, tendremos \( K + 2q \) cruces. Donde \( q \in \{-2, -1, 0, 1, 2\} \). Por lo tanto, la cantidad de cruces (que es inicialmente cero) siempre será par. Luego, es imposible obtener todas las monedas cruz a través de un número finito de operaciones. En este caso, la paridad de la cantidad de monedas cruz es invariante.
+
+\begin{example}
+En cada uno de los diez escalones de una escalera hay una rana. Cada rana puede, dando un salto, ir a otro escalón. Sin embargo, cuando una rana hace esto, al mismo tiempo, otra rana debe saltar la misma cantidad de escalones en sentido contrario: una sube y otra baja. ¿Podrán las ranas colocarse todas juntas en el mismo escalón? Justifica.
+\end{example}
+Solución. Vamos a decir que una rana tiene energía \( i \) si está en el \( i \)-ésimo escalón. Por ejemplo, una rana que está en el tercer escalón tiene energía 3. Si salta al séptimo escalón pasará a tener energía 7. De esta forma, observe que la suma de las energías de todas las ranas es invariante. Es decir, siempre es \( 1 + 2 + \cdots + 10 = 55 \). Por lo tanto, si en algún momento todas están en el mismo escalón \( x \), todas también tendrán energía \( x \), es decir \( 10x = 55 \). Y como \( x \in \mathbb{N} \), concluimos que es imposible que todas estén en el mismo escalón.\\
+
+Este problema parece más un problema de teoría de números que un problema de invariancia. En realidad, ¿cómo puede ser un problema de invariancia si no tenemos ninguna transformación? ¡No importa! ¡Podemos crear nuestras propias transformaciones!
+
+\begin{example}
+    Cada uno de los números \( a_1, a_2, \ldots, a_n \) es 1 o -1, y tenemos que:
+\[
+S = a_1a_2a_3a_4 + a_2a_3a_4a_5 + \cdots + a_n a_1 a_2 a_3 = 0
+\]
+Prueba que \( 4 \mid n \).
+\end{example}
+
+Solución. Nuestro movimiento será el siguiente: "cambiar \( a_i \) por \( -a_i \)". Haciendo esta operación, la congruencia de \( S \) módulo 4 es invariante porque cambian de signo exactamente cuatro términos de \( S \). Así que, basta cambiar todos los \( a_i \) que sean -1 por 1. Por lo tanto, \( 0 \equiv S \equiv 1+1+\cdots+1 \equiv n \pmod{4} \) lo que implica que \( 4 \mid n \).
+
+\begin{example}
+    Dado un polinomio cuadrático \( ax^2 + bx + c \) podemos hacer las siguientes operaciones:
+\begin{enumerate}
+    \item Intercambiar \( a \) con \( c \).
+    \item Cambiar \( x \) por \( x + t \) donde \( t \) es un número real.
+\end{enumerate}
+
+¿Es posible transformar \( x^2 - x - 2 \) en \( x^2 - x - 1 \) usando estas operaciones?
+\end{example}
+Solución. Vamos a demostrar que el "delta" es invariante. Observe que los polinomios \( ax^2 + bx + c \) y \( cx^2 + bx + a \) tienen el mismo delta \( \Delta = b^2 - 4ac \). Además, dado \( t \) real, podemos simplificar:
+\[
+a(x + t)^2 + b(x + t) + c = a(x^2 + 2tx + t^2) + b(x + t) + c = ax^2 + (2ta + b)x + (at^2 + bt + c)
+\]
+El discriminate de este último polinomio es:
+\[
+\Delta' = (2ta + b)^2 - 4a(at^2 + bt + c) = b^2 - 4ac
+\]
+
+\textbf{Nota:} La mayoría de los problemas de invariancia tienen el enunciado muy parecido. Todos ellos de alguna forma preguntan si, dada una configuración, es posible llegar a otra. Y como también debes haber visto, la mayoría de las respuestas es siempre no. ¡Cuidado! Existen problemas con el enunciado muy parecido, pero la respuesta es afirmativa. En estos casos, debemos mostrar cómo llegar a la tan deseada configuración.\\
+
+El siguiente ejemplo es de la Olimpiada de Leningrado de 1990. Este ejercicio aclarará la idea de ``falsa invariante''.
+
+\begin{example}
+    El número 123 está en la pantalla de la computadora de Teddy. Cada minuto, el número escrito en la pantalla se suma con 102. Teddy puede cambiar el orden de los dígitos del número escrito en la pantalla cuando él quiera. ¿Puede hacer que el número escrito en la pantalla sea siempre un número de tres dígitos?
+\end{example}
+Solución. Es posible, basta con que siga la secuencia: 123 → 225 → 327 → 429 → 531 \(\Rightarrow\) 135 → 237 \(\Rightarrow\) 327 → 429 ···, donde → denota la operación de computadora y \(\Rightarrow\) una operación hecha por Teddy.
+
+\Opensolutionfile{all-hints}
+
+\section{Problemas Propuestos}
+
+\begin{problem}
+Los números \(1, 2, \ldots, 1989\) están escritos en una pizarra. Podemos borrar dos números y escribir su diferencia en el lugar. Después de muchas operaciones, quedamos solo con un número. ¿Este número puede ser cero?
+\begin{hint}
+    La suma de los números del 1 al 1989 es un número impar. Observa cómo cambia la paridad de la suma de los números en la pizarra durante el proceso de borrado y escritura.
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Los números \(1, 2, \ldots, 20\) están escritos en una pizarra. Podemos borrar dos de ellos \(a\) y \(b\) y escribir en su lugar el número \(a + b + ab\). Después de muchas operaciones, quedamos solo con un número. ¿Cuál debe ser ese número?
+\begin{hint}
+    Expresa la operación de reemplazo como una suma factorizada. Luego, encuentra un invariante del proceso de operaciones al observar el efecto de la operación autorizada en la secuencia de números en la pizarra.
+\end{hint}
+\end{problem}
+
+\begin{problem}[Leningrado 1987] Las monedas de los países Dillia y Dallia son el diller y el daller, respectivamente. Podemos cambiar un diller por diez dallers y un daller por diez dillers. Elisa posee un diller y desea obtener la misma cantidad de dillers y dallers usando estas operaciones. ¿Es posible que eso ocurra?
+\begin{hint}
+    Considera cómo la congruencia módulo 11 se mantiene invariante a lo largo del proceso.
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Sea \(d(x)\) la suma de los dígitos de \(x \in \mathbb{N}\). Determine todas las soluciones de la ecuación
+\[ d(d(n)) + d(n) + n = 1997. \]
+\begin{hint}
+    Demuestra que el resto en la división por 9 es un invariante en la operación que transforma \(n\) en \(d(n)\).
+\end{hint}
+\end{problem}
+
+\begin{problem}
+En un tablero \(8 \times 8\) una de las casillas está pintada de negro y las otras casillas están pintadas de blanco. Podemos elegir cualquier fila o columna y cambiar el color de todas sus casillas. ¿Usando estas operaciones, podemos obtener un tablero enteramente negro?
+\begin{hint}
+    Muestra que la paridad del número de casillas negras en el tablero es un invariante del proceso de cambio de colores. Considera cómo la paridad inicial determina la imposibilidad de tener todas las casillas negras al final del proceso.
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Empezando con el trío \{3, 4, 12\} podemos en cada paso elegir dos números \( a \) y \( b \) y cambiarlos por \( 0.6a - 0.8b \) y \( 0.8a + 0.6b \). ¿Usando esta operación podemos obtener \{4, 6, 12\}?
+\begin{hint}
+Observa las propiedades invariantes de la transformación.
+\end{hint}
+\end{problem}
+
+\begin{problem}[Torneo de las Ciudades] Hay diez monedas en línea recta. Es posible voltear cuatro consecutivas o elegir cinco consecutivas y voltear cuatro que están en la extremidad (× × \(\circ\) × ×).
+\begin{hint}
+Piensa en la paridad y los cambios resultantes de cada operación.
+\end{hint}
+\end{problem}
+
+\begin{problem}
+En un tablero \( 3 \times 3 \) una de las casillas de la esquina está pintada de negro y las otras casillas de blanco. Podemos elegir cualquier fila o columna y cambiar el color de todas sus casillas. ¿Usando estas operaciones, podemos obtener un tablero completamente negro?
+\begin{hint}
+Investiga las posiciones relativas de las casillas negras.
+\end{hint}
+\end{problem}
+
+\begin{problem}[Bulgaria 2004] Considere todas las ``palabras'' formadas por \( a \)'s y \( b \)'s. En estas palabras podemos hacer las siguientes operaciones: Cambiar un bloque \( aba \) por un bloque \( b \), cambiar un bloque \( bba \) por un bloque \( a \). También podemos hacer las operaciones al contrario. ¿Es posible obtener la secuencia \( b \underbrace{aa\ldots a}_{2003} \) de \( \underbrace{aa\ldots a}_{2003}b \)?
+\begin{hint}
+Estudia la longitud y las transformaciones posibles.
+\end{hint}
+\end{problem}
+
+\begin{problem}[Fortaleza 2003] En una circunferencia tomamos \( m + n \) puntos, que la dividen en \( m + n \) pequeños arcos. Pintamos \( m \) puntos de blanco y los \( n \) restantes de negro. Luego, asociamos a cada uno de los \( m + n \) arcos uno de los números 2, 1/2 o 1, dependiendo si los extremos del arco son, respectivamente, ambos blancos, ambos negros o uno negro y uno blanco. Calcule el producto de los números asociados a cada uno de los \( m + n \) arcos.
+\begin{hint}
+Multiplica los factores asociados a los arcos consecutivamente.
+\end{hint}
+\end{problem}
+
+\begin{problem}[Cono Sur 2000] En el plano cartesiano, considere los puntos de coordenadas enteras. Una operación consiste en elegir uno de estos puntos y realizar una rotación de 90° en sentido antihorario, con centro en este punto. ¿Es posible, a través de una secuencia de estas operaciones, llevar el triángulo de vértices \( (0,0); (1,0); (0,1) \) al triángulo de vértices \( (0,0); (1,0); (1,1) \)?
+\begin{hint}
+Investiga cómo se modifican las coordenadas bajo la operación.
+\end{hint}
+\end{problem}
+
+\begin{problem}[Leningrado 1988] Una pila con 1001 piedras está sobre una mesa. Un juego consiste en elegir una pila sobre la mesa que contenga más de una piedra, retirar una piedra, y separar la pila en dos pilas no vacías (no necesariamente iguales). Después de varios movimientos, ¿es posible que todas las pilas restantes contengan exactamente tres piedras?
+\begin{hint}
+Considera el número de piedras y cómo se dividen en cada operación.
+\end{hint}
+\end{problem}
+
+\begin{problem}[Rusia 1995] Tres pilas de piedras están sobre una mesa. Silvio puede elegir dos pilas y transferir una piedra de una pila a otra. Por cada transferencia él recibe de Zeus el número de monedas igual a la diferencia entre la cantidad de piedras de la pila de donde fue retirada la piedra y la cantidad de piedras de la pila que recibió la piedra (la piedra en la mano de Silvio no se tiene en cuenta). Si esta diferencia es negativa, Silvio debe pagar a Zeus el número correspondiente (el generoso Zeus permite que él pague después si entra en bancarrota). Después de algún tiempo todas las pilas volvieron a tener la misma cantidad inicial de piedras. ¿Cuál es el número máximo de monedas que Silvio puede tener en este momento?
+\begin{hint}
+Analiza el balance de monedas tras cada transferencia.
+\end{hint}
+\end{problem}
+\Closesolutionfile{all-hints}
+
+\section{Sugerencias y Soluciones}
+\begin{enumerate}
+\input{all-hints.out}
+\end{enumerate}
+
+\end{document}

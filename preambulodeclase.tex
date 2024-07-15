@@ -1,0 +1,31 @@
+%Preámbulo para trabajar las Clases
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0em}
+%Para agregar paquetes adicionales, colocar coma y agregar:
+\usepackage{latexsym, amssymb, amsmath, amsthm, color, pstricks-add, asymptote, graphicx, fancyhdr, caption, cancel,multicol}
+%Para modificar los márgenes del documento:
+\usepackage[paper=letterpaper,right=3cm,left=3cm,top=2.5cm,bottom=2.5cm]{geometry}
+%Para modificar el interlineado del documento: 
+\renewcommand{\baselinestretch}{1.15}
+
+%Hacer cálculos matematicos
+\usepackage{expl3, xparse}
+\ExplSyntaxOn
+\DeclareDocumentCommand { \myformat }{m}
+  { \fp_to_decimal:n { round((#1),9) } }
+\ExplSyntaxOff
+
+%Simbolos matemáticos
+\newcommand{\ndiv}{\hspace{-4pt}\not|\hspace{2pt}}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+ 
+\urlstyle{same}

@@ -1,0 +1,185 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+
+\usepackage{answers}
+\Newassociation{hint}{hintitem}{all-hints}
+\renewcommand{\solutionextension}{out}
+\renewenvironment{hintitem}[1]{\item[\bfseries #1.]}{}
+
+\usepackage{venndiagram,multicol,hyperref,graphicx,array}
+
+\begin{document}
+\title{Paridad}
+\author{Ricardo Largaespada}
+\date{10 Febrero 2024}
+
+\maketitle
+
+\section{Introducción}
+
+Todo número natural es par o impar. Con esta afirmación simple, abordaremos los problemas de paridad en combinatoria. Exploraremos cómo la comprensión de la paridad nos ayuda a resolver eficazmente una amplia gama de problemas de conteo y estructuración en matemáticas.
+
+\section{Problemas Resueltos}
+\begin{example}
+En el reino de Frutilandia existe un árbol mágico que tiene 2005 manzanas y 2006 tomates. Todos los días, un niño sube al árbol y come dos frutas. Cuando come dos frutas iguales, nace un tomate en el árbol; cuando come dos frutas diferentes, nace una manzana. Después de algunos días, solo quedará una fruta en el árbol. ¿Qué fruta será?
+\end{example}
+
+\textbf{Respuesta:} La fruta que quedará en el árbol será una \textbf{manzana}.
+
+Siempre que el niño toma dos frutas del árbol, el número de manzanas disminuirá en 2 o permanecerá constante. De esta manera, la paridad del número de manzanas siempre será la misma. Como inicialmente teníamos un número impar de manzanas, la cantidad de ellas permanecerá impar hasta el final. Por lo tanto, la última fruta debe ser una manzana.
+
+\begin{example}
+El juego consta de 9 botones luminosos (de color verde o amarillo) dispuestos de la siguiente manera:
+
+\begin{center}
+\(\begin{array}{ccc}
+    1\bigcirc & 2\bigcirc & 3\bigcirc\\
+    4\bigcirc & 5\bigcirc & 6\bigcirc\\
+    7\bigcirc & 8\bigcirc & 9\bigcirc\\
+\end{array}\)
+\end{center}
+
+Si se pulsa un botón del borde del rectángulo, éste y sus vecinos (laterales o diagonales) cambian de color. Si se pulsa el botón del centro, cambian de color sus ocho vecinos, pero no el botón del centro. Inicialmente, todos los botones son verdes: ¿Es posible, pulsando sucesivamente algunos botones, volverlos todos amarillos?
+\end{example}
+
+Tenga en cuenta que si pulsa los botones 1, 3, 7 o 9, cambiará el color de 4 botones. Al pulsar los botones 2, 4, 6 u 8, cambia el color de 6 botones. Si pulsas el botón del centro, cambiará el color de 8 botones. Como 4, 6 y 8 son números pares, el número total de botones verdes es siempre par y para tener 9 botones amarillos, tendríamos que tener cero botones verdes. Absurdo, ya que 0 es un número par.\\
+
+Para demostrar la relevancia de la asignatura que estamos estudiando en las competiciones de matemáticas, vamos a resolver dos problemas que aparecieron en la Olimpiada de Leningrado (cuando terminó la Unión Soviética, pasó a llamarse San Petersburgo).
+
+\begin{example}[Leningrado 1990]
+Paula compró un cuaderno con 96 hojas, con páginas enumeradas del 1 al 192. Nicolás arrancó 25 hojas al azar y sumó todos los 50 números escritos en estas hojas. ¿Es posible que esta suma sea 1990?
+\end{example}
+
+Observa que la suma de los números escritos en una misma hoja siempre es impar. Por lo tanto, si Nicolás arrancó 25 hojas, la suma de todos los números será impar, ya que es la suma de una cantidad impar de números impares. Por lo tanto, esta suma no puede ser 1990.
+
+\begin{example}[Leningrado 1989]
+Un grupo de \( K \) físicos y \( K \) químicos está sentado alrededor de una mesa. Algunos de ellos siempre dicen la verdad y otros siempre mienten. Se sabe que el número de mentirosos entre los físicos y químicos es el mismo. Cuando se les preguntó: ¿Cuál es la profesión de tu vecino de la derecha?, todos respondieron ``Químico''. Demuestra que \( K \) es par.
+\end{example}
+
+Por las respuestas de las personas del grupo, podemos concluir que a la izquierda de un físico siempre está sentado un mentiroso y que a la derecha de un mentiroso siempre hay un físico. Entonces, el número de físicos es igual al número de mentirosos, que es claramente par. Por lo tanto, \( K \) es par.
+
+\begin{example}
+Un saltamontes vive en la recta coordenada. Inicialmente, se encuentra en el punto 1. Puede saltar 1 o 5 unidades, tanto hacia la derecha como hacia la izquierda. Sin embargo, la recta coordenada tiene agujeros en todos los puntos que son múltiplos de 4 (es decir, hay agujeros en los puntos -4, 0, 4, 8, etc.), así que no puede saltar a estos puntos. ¿Puede el saltamontes llegar al punto 3 después de 2003 saltos?
+\end{example}
+
+Observe que con cada salto cambia la paridad del punto donde se encuentra el saltamontes. Por lo tanto, después de 2003 saltos, estará en una coordenada par. Por lo tanto, no puede ser 3.\\
+
+Para finalizar, vamos a resolver un problema interesante donde el uso de la paridad no es tan fácil de percibir. Invitamos al lector a intentar encontrar una solución antes de leer la respuesta en secuencia.
+
+\subsection*{El problema de los sombreros.}
+
+Imagina que 10 prisioneros estén encerrados en una celda cuando llega un carcelero con el siguiente comunicado:\\
+
+    \textit{Mañana todos ustedes pasarán por una prueba. Todos se colocarán en fila india y se les colocarán sombreros en la cabeza a uno de ustedes. Cada uno podrá ver los sombreros de los que están delante de él. Sin embargo, no podrán ver los sombreros de los que están detrás, ni su propio sombrero. Los sombreros serán negros o blancos. Después de eso, se le preguntará a cada uno de ustedes, de último a primero, en orden, de qué color es su sombrero. Si la persona se equivoca en el color de su sombrero, será ejecutada.}\\
+
+¿Podrán los prisioneros idear una estrategia para salvar al menos a 9 de ellos?\\
+
+\textbf{Pensando en el problema:}
+Bueno, comencemos a discutir el problema de la siguiente manera: ¿pueden salvar la mayoría del grupo si acuerdan que cada uno de ellos diga el color del sombrero que está inmediatamente frente a ellos?\\
+
+Esta es la idea que todos tienen inicialmente, pero pronto se descubre que esta estrategia no funciona, ya que basta con que los colores de los sombreros estén alternados para que la estrategia falle. (Recuerden: estamos buscando una estrategia que sea independiente de la elección de los sombreros). \\
+
+Así que debemos pensar más profundamente. Observen que durante la prueba, cada uno de los prisioneros solo puede decir una de dos palabras: negro o blanco. Esto corresponde a un sistema de lenguaje binario. Otras formas de lenguaje binario son: sí y no, cero o uno, par o impar. Y es precisamente esta analogía la que vamos a utilizar para desarrollar nuestra estrategia, que será la siguiente:\\
+
+El último de la fila debe mirar hacia adelante y contar el número de sombreros negros. Si este número es impar, debe gritar "negro". De lo contrario, debe gritar "blanco". Con esto, todos sabrán la paridad de la cantidad de sombreros negros entre los nueve de la fila.\\
+
+Ahora, el penúltimo mirará hacia adelante y verá la cantidad de sombreros negros. Si la paridad sigue siendo la misma que la informada por el último, entonces su sombrero es blanco. Si cambia, puede concluir que su sombrero es negro. Y esto se puede hacer para todos los miembros de la fila, ya que todos sabrán el color de los sombreros de los anteriores (excepto el último) y la paridad de los sombreros negros entre los nueve primeros.\\
+
+Por lo tanto, es posible salvar a los nueve primeros, mientras que el último puede ser salvado, ¡si tiene suerte! Es importante destacar que las ideas presentes en esta lección serán de alguna manera generalizadas en lecciones futuras, como en las lecciones de tableros e invariantes.
+
+\Opensolutionfile{all-hints}
+
+\section{Problemas Propuestos}
+\begin{problem}
+    ¿Existe alguna solución entera para la ecuación \(a\cdot b\cdot (a-b)=45045\)?
+    \begin{hint}
+    Analice las cuatro posibles casos en las paridades \((a,b)\).
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+    Los números \(1,2,\ldots, n\) están escritos en la orden. Es permitido permutar cualesquiera dos elementos. ¿Es posible regresar a la posición inicial después de 2001 permutaciones?
+    \begin{hint}
+        Piensa en cómo cambia la paridad de la posición de un número cuando lo permutas con otro. Considera qué sucede con la paridad de la posición total de todos los números después de una permutación. Luego, intenta aplicar este conocimiento para deducir si es posible regresar a la posición inicial después de un número específico de permutaciones.
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+Un círculo está dividido en seis sectores marcados con los números 1, 0, 1, 0, 0, 0 en sentido horario. Se permite sumar 1 a dos sectores adyacentes. ¿Es posible, repitiendo esta operación varias veces, hacer que todos los números se vuelvan iguales?
+    \begin{hint}
+    Piensa en cómo cambia la paridad de la suma de los números en los sectores adyacentes cuando se suma 1 a dos sectores. Considera cómo podría utilizarse esto para determinar si es posible hacer que todos los números sean iguales mediante un número finito de operaciones.
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+¿Es posible que las seis diferencias entre dos elementos de un conjunto de cuatro números enteros sean iguales a 2, 2, 3, 4, 4 y 6?
+\begin{hint}
+Si $x$ e $y$ son números enteros, $x + y$ y $x - y$ tienen la misma paridad.
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Raul dijo que tenía dos años más que Katia. Katia dijo que tenía el doble de la edad de Pedro. Pedro dijo que Raul tenía 17 años. Muestra que uno de ellos mintió.
+    \begin{hint}
+    Intenta usar la información proporcionada para deducir las edades de los involucrados y verifica si hay alguna contradicción en las declaraciones. En particular, presta atención a la relación entre las edades mencionadas por cada persona y cómo estas se relacionan entre sí.
+    \end{hint}
+\end{problem}
+
+\begin{problem}[Torneo de las ciudades 1987]
+Una máquina da cinco fichas rojas cuando alguien inserta una ficha azul y da cinco fichas azules cuando alguien inserta una ficha roja. Pedro solo tiene una ficha azul y desea obtener la misma cantidad de fichas azules y rojas usando esta máquina. ¿Es posible hacer esto?
+    \begin{hint}
+    Observa cómo cambia el número total de fichas de Pedro después de usar la máquina una vez. Luego, considera qué implicaciones tiene esto en términos de la paridad del número total de fichas. Finalmente, reflexiona sobre las condiciones necesarias para que Pedro tenga la misma cantidad de fichas azules y rojas, y si estas condiciones son posibles dadas las restricciones iniciales.
+    \end{hint}
+\end{problem}
+
+\begin{problem}[China 1986]
+Considere una permutación de los números \(1,1,2,2,\ldots,1998,1998\) tales que entre dos números \(k\) existen \(k\) números. ¿Es posible o no hacer eso?
+    \begin{hint}
+    Observa la relación entre las posiciones de los números $k$ en la permutación y la cantidad de números entre ellos. Considera cómo puedes expresar estas relaciones matemáticamente y cómo puedes utilizarlas para deducir si es posible o no formar la permutación deseada. Presta especial atención a las sumas y diferencias que surgen de estas relaciones.
+    \end{hint}
+\end{problem}
+
+\begin{problem}[Rusia 2004]
+    ¿Es posible colocar números enteros positivos en las casillas de un tablero de $9 \times 2004$ de modo que la suma de los números en cada fila y la suma de los números en cada columna sean primos? Justifica tu respuesta.
+    \begin{hint}
+        Supongamos que sea posible hacer tal construcción. Sean $L_1, L_2, \ldots, L_9$ las sumas de los números de cada una de las 9 filas, y $C_1, C_2, \ldots, C_{2004}$ las sumas de los números de cada una de las 2004 columnas. Como cada $L_i$ y $C_j$ son primos, estos deben ser números impares (ya que son la suma de al menos nueve enteros positivos). Sea $S$ la suma de todos los números del tablero. Por un lado tendríamos:
+$$
+S = L_1 + L_2 + \ldots + L_9
+$$
+de donde concluimos que $S$ es impar, ya que es la suma de 9 impares. Por otro lado:
+$$
+S = C_1 + C_2 + \ldots + C_{2004}
+$$
+y de aquí concluiríamos que $S$ es par, lo cual es un absurdo. Por lo tanto, tal construcción no es posible.
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+El número \(A\) posee 17 dígitos. El número \(B\) posee los mismos dígitos de \(A\), pero en orden inverso. ¿Es posible que todos los dígitos de \(A+B\) sean impares?
+\begin{hint}
+    Observa que al sumar los dígitos de \(A\) y \(B\) en su forma invertida, puede haber un acarreo (cuando la suma de los dígitos en una posición supera 9) que afecte a los dígitos en posiciones posteriores. Considera cómo este acarreo podría afectar la paridad de los dígitos en posiciones distantes y cómo podrías utilizar esta información para demostrar que al menos uno de los dígitos en la suma \(A + B\) debe ser par.
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Considera un tablero $1998 \times 2002$ pintado alternadamente de negro y blanco de manera habitual. En cada casilla del tablero, escribimos 0 o 1, de modo que la cantidad de 1s en cada fila y en cada columna del tablero es impar. Demuestra que la cantidad de 1s escritos en las casillas blancas es par.
+\begin{hint}
+    Observa que el hecho de que la cantidad de 1s en cada fila y columna sea impar está relacionado con la paridad de los índices de las filas y columnas. Utiliza esta observación para analizar cómo se distribuyen los números en las casillas blancas y negras en términos de la paridad de sus índices de fila y columna. Considera cómo puedes utilizar estas distribuciones para demostrar la paridad de la cantidad de 1s en las casillas blancas.
+\end{hint}
+\end{problem}
+
+\begin{problem}[Ucrania 1997]
+Considera un tablero pintado de negro y blanco de la manera habitual y, en cada casilla del tablero, escribe un número entero, de modo que la suma de los números en cada columna y en cada fila sea par. Demuestra que la suma de los números en las casillas negras es par.
+\begin{hint}
+    Observa que la paridad de la fila y la columna de cada casilla determina si esa casilla es negra o blanca. Utiliza esta observación para analizar cómo se distribuyen los números en las casillas negras y blancas en términos de la paridad de sus índices de fila y columna. Considera cómo puedes utilizar estas distribuciones para demostrar la paridad de la suma de los números en las casillas negras.
+\end{hint}
+\end{problem}
+
+\Closesolutionfile{all-hints}
+
+\section{Sugerencias}
+\begin{enumerate}
+\input{all-hints.out}
+\end{enumerate}
+
+\end{document}
