@@ -1,0 +1,170 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\graphicspath{ {./images/} }
+
+\usepackage{answers}
+\Newassociation{hint}{hintitem}{all-hints}
+\renewcommand{\solutionextension}{out}
+\renewenvironment{hintitem}[1]{\item[\bfseries #1.]}{}
+
+\usepackage{venndiagram,multicol,hyperref,graphicx,array,xskak}
+
+\begin{document}
+\title{Principio Extremo}
+\author{Ricardo Largaespada}
+\date{03 Agosto 2024}
+
+\maketitle
+\section{Introducción}
+
+%TODO
+
+\begin{example}[Leningrado 1988]
+    Algunos pinos están en un tablero de ajedrez. A cada segundo, uno de los pinos se mueve a una casa vecina (lado en común). Después de mucho tiempo, se verificó que cada pino había pasado por todas las casas del tablero exactamente una vez y había vuelto a su casa inicial. Pruebe que existió un momento en que todos los pinos estaban fuera de su casa inicial.
+\end{example}
+Solución. Sea \(P\) el primer pino que volvió a su posición inicial. Un movimiento antes de que vuelva a su casa, cada uno de los otros pinos debe haber hecho un movimiento. De hecho, si esto no fuera verdad, \(P\) no podría haber pasado por todas las casas del tablero. De este modo, este será el momento en que todos los pinos estarán en casas diferentes de las iniciales.
+
+\begin{example}[Teorema de Sylvester]
+    Un conjunto finito \(S\) de puntos en el plano posee la propiedad de que cualquier línea que pasa por dos de estos puntos también pasa por un tercero. Pruebe que todos los puntos están sobre una línea.
+\end{example}
+Solución. Sea \(L\) el conjunto de todas las líneas que pasan por al menos dos puntos de \(S\). Ahora sean \(P_0 \in S\) y \(l_0 \in L\) tales que la distancia entre \(P_0\) y \(l_0\) es la menor posible, pero diferente de cero. Sea \(Q\) la proyección de \(P_0\) sobre \(l_0\). Como la línea \(l_0\) pasa por tres de ellos, al menos dos de ellos \(N\) y \(M\) están en la misma semi-línea (en relación a \(Q\)). Suponga que \(N\) es el más próximo de \(Q\); de este modo, la distancia entre \(N\) y la línea \(P_0M\) es menor que la mínima. Contradicción.\\
+
+\begin{example}[Leningrado 1989]
+    Dado un número natural \(k\) mayor que 1, pruebe que es imposible colocar los números \(1, 2, \ldots, k^2\) en un tablero \(k \times k\) de forma que todas las sumas de los números escritos en cada fila y columna sean potencias de 2.
+\end{example}
+Solución. Suponga que es posible hacer tal distribución para algún entero positivo \(k\). Además, sea \(2^n\) la menor de las sumas. Debemos tener:
+\[
+2^n \leq 1 + 2 + \cdots + k = \frac{k(k+1)}{2}.
+\]
+Como \(2^n\) es la menor potencia, \(2^n\) divide la suma de los elementos en cualquier fila, por lo tanto, divide la suma de todos los elementos del tablero. Así:
+\[
+2^n \mid \frac{k^2(k^2 + 1)}{2}.
+\]
+Como \(k^2\) y \(k^2 + 1\) tienen paridades opuestas, \(2^{n+1}\) debe dividir solo uno de ellos. En cualquier caso, tenemos \(2^{n+1} \leq k^2 + 1\). Esto contradice la primera desigualdad encontrada.
+
+\begin{example}[San Petersburgo 1998]
+    En cada una de diez hojas de papel están escritas diversas potencias de 2. La suma de los números en cada una de las hojas es la misma. Muestre que algún número aparece al menos 6 veces.
+\end{example}
+Solución. Sea \(N\) la suma común, y \(n\) el mayor entero tal que \(2^n \leq N\). Suponga que cada potencia solo ocurre como máximo 5 veces. De ahí,
+\[
+5(1 + 2 + \cdots + 2^n) = 5(2^{n+1} - 1) < 10N.
+\]
+Y esto genera una contradicción.
+
+\Opensolutionfile{all-hints}
+
+\section{Problemas Propuestos}
+
+\begin{problem}
+.
+\begin{hint}
+..
+\end{hint}
+\end{problem}
+
+
+\Closesolutionfile{all-hints}
+
+\section{Sugerencias y Soluciones}
+\begin{enumerate}
+\input{all-hints.out}
+\end{enumerate}
+
+\end{document}
+
+\begin{problem}
+    Dado un conjunto de \(n\) puntos en el plano, no todos en una misma línea, existe una línea que pasa por exactamente dos de esos puntos.
+    \begin{hint}
+    ..
+    \end{hint}
+\end{problem}
+    
+\begin{problem}
+    Son dados \(n \geq 3\) puntos en el plano de forma que cualquier tres están en un triángulo de área menor que 1. Muestre que todos ellos están en un triángulo de área menor que 4.
+    \begin{hint}
+    ..
+    \end{hint}
+\end{problem}
+    
+\begin{problem}
+    Son dados \(n\) puntos en el plano. Marcamos entonces los puntos medios de todos los segmentos con extremos en esos \(n\) puntos. Pruebe que hay al menos \(2n - 3\) puntos marcados distintos.
+    \begin{hint}
+    ..
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+    Hay 20 países en un planeta. Se sabe que entre cualquier tres de estos países, siempre hay dos sin relaciones diplomáticas. Pruebe que existen, como máximo, 200 embajadas en este planeta.
+    \begin{hint}
+    ..
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+    Todo participante de un torneo juega con cada uno de los otros participantes exactamente una vez. Después del torneo, cada jugador hace una lista con los nombres de todos los jugadores vencidos por él y de todos los que fueron vencidos por los jugadores que él venció. Sabiendo que en este torneo no hay empates, pruebe que existe un jugador cuya lista contiene el nombre de todos los otros jugadores.
+    \begin{hint}
+    ..
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+    En un patio están localizadas \(2n + 1\) personas tales que las distancias entre cualquiera dos de ellas son todas distintas. En un dado momento, cada una de ellas dispara a la persona más próxima. Pruebe que:
+    \begin{itemize}
+        \item[(a)] Al menos una persona sobrevivirá.
+        \item[(b)] Nadie recibirá más de cinco disparos.
+        \item[(c)] Los caminos de las balas no se cruzan.
+        \item[(d)] Los segmentos formados por las trayectorias de las balas no forman un polígono convexo cerrado.
+    \end{itemize}
+    \begin{hint}
+    ..
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+    Considere tres escuelas, cada una con \(n\) alumnos. Cada estudiante tiene en total \(n + 1\) amigos en las otras dos escuelas donde él no estudia. Pruebe que es posible seleccionar un estudiante de cada escuela de tal forma que los tres se conozcan mutuamente.
+    \begin{hint}
+    ..
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+    En cada punto de la cuadrícula del plano se coloca un entero positivo. Cada uno de esos números es el promedio aritmético de sus cuatro vecinos. Muestre que todos los números son iguales.
+    \begin{hint}
+    ..
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+    En cada casa de un tablero \(8 \times 8\) existe un número que puede ser 0 o 1. Para cada casa que contiene un 0, la suma de los números escritos en las casas que están o en la misma fila o en la misma columna de esta casa es mayor o igual a 8. Pruebe que la suma de todos los números en el tablero es mayor o igual a 32.
+    \begin{hint}
+    ..
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+    El parlamento de Bruzundanga consiste en una casa. Todo miembro tiene como máximo tres enemigos entre los restantes. Muestre que es posible separar la casa en dos casas de tal forma que cada miembro tenga como máximo un enemigo en su casa.
+    \begin{hint}
+    ..
+    \end{hint}
+\end{problem}
+
+\begin{problem}[Torneo de las Ciudades 1987]
+    \begin{itemize}
+        \item[(a)] \(3n\) estrellas son colocadas en un tablero \(2n \times 2n\). Pruebe que podemos eliminar \(n\) estrellas de tal forma que no sobre ninguna línea horizontal o vertical con más de una estrella.
+        \item[(b)] \(7n\) estrellas son colocadas en un tablero \(3n \times 3n\). Pruebe que podemos eliminar \(n\) estrellas de tal forma que no sobre ninguna línea horizontal o vertical con más de una estrella.
+    \end{itemize}
+        \begin{hint}
+    ..
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+    En una cuadrícula infinita se coloca un número entero en cada casilla. El número escrito en cada casilla es el promedio aritmético de los números escritos en las cuatro casillas vecinas. Pruebe que todos los números son iguales.
+    \begin{hint}
+    ..
+    \end{hint}
+\end{problem}
+
+\end{document}
