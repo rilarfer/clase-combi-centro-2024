@@ -19,16 +19,58 @@
 \maketitle
 \section{Introducción}
 
-%TODO
+El principio extremo en combinatoria es una herramienta poderosa utilizada para resolver problemas en diversas áreas de la matemática, especialmente en combinatoria y teoría de grafos. Este principio se basa en la idea de analizar elementos extremos de un conjunto, como los elementos máximos o mínimos, y utilizar sus propiedades para derivar conclusiones generales sobre el conjunto completo.
+
+\subsection*{Definición}
+
+En términos generales, el principio extremo establece que en cualquier conjunto finito de elementos, siempre existen elementos extremos, es decir, elementos que son mínimos o máximos en algún sentido. Al enfocarse en estos elementos extremos, a menudo es posible simplificar y resolver problemas complejos.
+
+\subsection*{Aplicaciones Comunes}
+
+El principio extremo se utiliza en una variedad de contextos combinatorios, tales como:
+
+\begin{itemize}
+    \item \textbf{Grafos}: Determinar propiedades de grafos, como caminos, ciclos.
+    \item \textbf{Geometría Discreta}: Analizar configuraciones de puntos y rectas en el plano.
+    \item \textbf{Teoría de Números}: Resolver problemas relacionados con conjuntos de números y sus propiedades.
+    \item \textbf{Teoría de Conjuntos}: Probar la existencia de subconjuntos con propiedades específicas.
+\end{itemize}
+
+\subsection*{Ejemplos Clásicos}
+
+\begin{itemize}
+    \item \textbf{Teorema de Erdős–Szekeres}: En cualquier secuencia de \(n^2 + 1\) números distintos, siempre existe una subsecuencia creciente de longitud \(n+1\) o una subsecuencia decreciente de longitud \(n+1\).
+    \item \textbf{Principio de Casillas }: Si se distribuyen más de \(n\) elementos en \(n\) compartimentos, al menos un compartimento contendrá más de un elemento.
+\end{itemize}
+
+\subsection*{Método de Prueba}
+
+El uso del principio extremo generalmente sigue estos pasos:
+
+\begin{enumerate}
+    \item Identificar el conjunto de elementos que se está considerando.
+    \item Determinar una propiedad extrema relevante (mínimo, máximo, etc.).
+    \item Analizar las consecuencias de la existencia de este elemento extremo.
+    \item Utilizar estas consecuencias para resolver el problema original.
+\end{enumerate}
+
+El principio extremo es una herramienta fundamental en la resolución de problemas combinatorios. Al centrarse en elementos extremos de un conjunto, es posible simplificar y abordar problemas que de otro modo serían complejos. La habilidad de identificar y utilizar estos elementos extremos es una parte esencial del arsenal de cualquier matemático.\\
+
+Ahora algunos ejemplos:
 
 \begin{example}[Leningrado 1988]
-    Algunos pinos están en un tablero de ajedrez. A cada segundo, uno de los pinos se mueve a una casa vecina (lado en común). Después de mucho tiempo, se verificó que cada pino había pasado por todas las casas del tablero exactamente una vez y había vuelto a su casa inicial. Pruebe que existió un momento en que todos los pinos estaban fuera de su casa inicial.
+    Algunas fichas están en un tablero de ajedrez. A cada segundo, cada una de las fichas se mueve a una casilla vecina (lado en común). Después de mucho tiempo, se verificó que cada ficha había pasado por todas las casillas del tablero exactamente una vez y había vuelto a su casilla inicial. Pruebe que existió un momento en que todas las fichas estaban fuera de su casilla inicial.
 \end{example}
-Solución. Sea \(P\) el primer pino que volvió a su posición inicial. Un movimiento antes de que vuelva a su casa, cada uno de los otros pinos debe haber hecho un movimiento. De hecho, si esto no fuera verdad, \(P\) no podría haber pasado por todas las casas del tablero. De este modo, este será el momento en que todos los pinos estarán en casas diferentes de las iniciales.
+Solución. Sea \(P\) la primera ficha que volvió a su posición inicial. Un movimiento antes de que vuelva a su casilla, cada uno de las otras fichas debe haber hecho un movimiento. De hecho, si esto no fuera verdad, \(P\) no podría haber pasado por todas las casillas del tablero. De este modo, este será el momento en que todas las fichas estarán en casillas diferentes de las iniciales.
 
 \begin{example}[Teorema de Sylvester]
     Un conjunto finito \(S\) de puntos en el plano posee la propiedad de que cualquier línea que pasa por dos de estos puntos también pasa por un tercero. Pruebe que todos los puntos están sobre una línea.
 \end{example}
+
+\begin{center}
+    \includegraphics[scale=1]{images/clase_13_silvestre.png}
+\end{center}
+
 Solución. Sea \(L\) el conjunto de todas las líneas que pasan por al menos dos puntos de \(S\). Ahora sean \(P_0 \in S\) y \(l_0 \in L\) tales que la distancia entre \(P_0\) y \(l_0\) es la menor posible, pero diferente de cero. Sea \(Q\) la proyección de \(P_0\) sobre \(l_0\). Como la línea \(l_0\) pasa por tres de ellos, al menos dos de ellos \(N\) y \(M\) están en la misma semi-línea (en relación a \(Q\)). Suponga que \(N\) es el más próximo de \(Q\); de este modo, la distancia entre \(N\) y la línea \(P_0M\) es menor que la mínima. Contradicción.\\
 
 \begin{example}[Leningrado 1989]
@@ -58,12 +100,46 @@ Y esto genera una contradicción.
 \section{Problemas Propuestos}
 
 \begin{problem}
-.
-\begin{hint}
-..
-\end{hint}
+    Dado un conjunto de \(n\) puntos en el plano, no todos en una misma recta, existe una recta que pasa por exactamente dos de esos puntos.
+    \begin{hint}
+    Si dibujas todas las rectas posibles a través de pares de puntos, considera cuántos puntos pueden estar en la misma recta.
+    \end{hint}
+\end{problem}
+    
+\begin{problem}
+Ocho equipos de fútbol participan en un torneo de una vuelta (cada equipo juega una vez contra cada uno de los demás).  No hay empates.  Demostrar que es posible que al final del torneo haya 4 equipos, digamos $A$, $B$, $C$ y $D$, de modo que $A$ haya derrotado a $B$, $C$ y $D$, $B$ haya derrotado a $C$ y $D$, y $C$ haya derrotado a $D$.
+    \begin{hint}
+    ¿Cuántos enfrentamientos hay en el torneo?
+    \end{hint}
+\end{problem}
+    
+\begin{problem}
+    Hay 20 países en un planeta. Se sabe que entre cualquier tres de estos países, siempre hay dos sin relaciones diplomáticas. Pruebe que existen, como máximo, 200 embajadas en este planeta.
+    \begin{hint}
+    Considera cómo se pueden maximizar las relaciones diplomáticas.
+    \end{hint}
 \end{problem}
 
+\begin{problem}
+    Todo participante de un torneo juega con cada uno de los otros participantes exactamente una vez. Después del torneo, cada jugador hace una lista con los nombres de todos los jugadores vencidos por él y de todos los que fueron vencidos por los jugadores que él venció. Sabiendo que en este torneo no hay empates, pruebe que existe un jugador cuya lista contiene el nombre de todos los otros jugadores.
+    \begin{hint}
+    Piensa en el concepto de grafo dirigidos.
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+    Considere tres escuelas, cada una con \(n\) alumnos. Cada estudiante tiene en total \(n + 1\) amigos en las otras dos escuelas donde él no estudia. Pruebe que es posible seleccionar un estudiante de cada escuela de tal forma que los tres se conozcan mutuamente.
+    \begin{hint}
+    Usa el teorema de la amistad.
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+    En cada punto de la cuadrícula del plano se coloca un entero positivo. Cada uno de esos números es el promedio aritmético de sus cuatro vecinos. Muestre que todos los números son iguales.
+    \begin{hint}
+    El mayor de los números es mayor o igual que el promedio.
+    \end{hint}
+\end{problem}
 
 \Closesolutionfile{all-hints}
 
@@ -72,99 +148,46 @@ Y esto genera una contradicción.
 \input{all-hints.out}
 \end{enumerate}
 
-\end{document}
+\section*{Teorema de Erdős–Szekeres}
 
-\begin{problem}
-    Dado un conjunto de \(n\) puntos en el plano, no todos en una misma línea, existe una línea que pasa por exactamente dos de esos puntos.
-    \begin{hint}
-    ..
-    \end{hint}
-\end{problem}
+\begin{theorem}
+En cualquier secuencia de \(n^2 + 1\) números distintos, siempre existe una subsecuencia creciente de longitud \(n + 1\) o una subsecuencia decreciente de longitud \(n + 1\).
+\end{theorem}
+
+Este teorema es una declaración poderosa sobre la estructura interna de cualquier secuencia suficientemente larga de números distintos. Es una aplicación del principio de casillas.
+
+\begin{proof}
+    Considere una secuencia de \(n^2 + 1\) números distintos \(a_1, a_2, \ldots, a_{n^2+1}\).
     
-\begin{problem}
-    Son dados \(n \geq 3\) puntos en el plano de forma que cualquier tres están en un triángulo de área menor que 1. Muestre que todos ellos están en un triángulo de área menor que 4.
-    \begin{hint}
-    ..
-    \end{hint}
-\end{problem}
+    Definimos dos funciones \(L(i)\) y \(M(i)\) para cada \(1 \leq i \leq n^2 + 1\):
+    \begin{itemize}
+        \item \(L(i)\) es la longitud de la subsecuencia creciente más larga que termina en \(a_i\).
+        \item \(M(i)\) es la longitud de la subsecuencia decreciente más larga que termina en \(a_i\).
+    \end{itemize}
     
-\begin{problem}
-    Son dados \(n\) puntos en el plano. Marcamos entonces los puntos medios de todos los segmentos con extremos en esos \(n\) puntos. Pruebe que hay al menos \(2n - 3\) puntos marcados distintos.
-    \begin{hint}
-    ..
-    \end{hint}
-\end{problem}
+    Observamos que \(1 \leq L(i), M(i) \leq n + 1\) porque si alguna de estas longitudes fuera mayor que \(n + 1\), tendríamos una subsecuencia creciente o decreciente de longitud mayor a \(n + 1\).
+    
+    Ahora, consideramos el par \((L(i), M(i))\) para cada \(1 \leq i \leq n^2 + 1\). Cada par \((L(i), M(i))\) puede tener \(n + 1\) valores posibles para cada componente, lo que nos da un total de \((n + 1) \times (n + 1) = n^2 + 2n + 1\) posibles pares diferentes.
+    
+    Sin embargo, tenemos \(n^2 + 1\) elementos en nuestra secuencia, lo que significa que necesariamente alguno de los valores \((L(i), M(i))\) se repetirá más de una vez por el principio de Dirichlet.
+    
+    Supongamos que no existe una subsecuencia creciente de longitud \(n + 1\) ni una subsecuencia decreciente de longitud \(n + 1\). Entonces, \(1 \leq L(i), M(i) \leq n\) para todos los \(i\), lo que da un total de \(n \times n = n^2\) posibles pares diferentes.
+    
+    Pero, como tenemos \(n^2 + 1\) elementos, debe existir al menos un par repetido, lo cual contradice nuestra suposición de que no existen subsecuencias crecientes o decrecientes de longitud \(n + 1\).
+    
+    Por lo tanto, siempre debe existir una subsecuencia creciente de longitud \(n + 1\) o una subsecuencia decreciente de longitud \(n + 1\).
+\end{proof}
 
-\begin{problem}
-    Hay 20 países en un planeta. Se sabe que entre cualquier tres de estos países, siempre hay dos sin relaciones diplomáticas. Pruebe que existen, como máximo, 200 embajadas en este planeta.
-    \begin{hint}
-    ..
-    \end{hint}
-\end{problem}
+\subsection*{Ejemplo}
 
-\begin{problem}
-    Todo participante de un torneo juega con cada uno de los otros participantes exactamente una vez. Después del torneo, cada jugador hace una lista con los nombres de todos los jugadores vencidos por él y de todos los que fueron vencidos por los jugadores que él venció. Sabiendo que en este torneo no hay empates, pruebe que existe un jugador cuya lista contiene el nombre de todos los otros jugadores.
-    \begin{hint}
-    ..
-    \end{hint}
-\end{problem}
+Consideremos \(n = 3\). Según el teorema, en cualquier secuencia de \(3^2 + 1 = 10\) números distintos, siempre existe una subsecuencia creciente de longitud \(3 + 1 = 4\) o una subsecuencia decreciente de longitud \(3 + 1 = 4\).
 
-\begin{problem}
-    En un patio están localizadas \(2n + 1\) personas tales que las distancias entre cualquiera dos de ellas son todas distintas. En un dado momento, cada una de ellas dispara a la persona más próxima. Pruebe que:
-    \begin{itemize}
-        \item[(a)] Al menos una persona sobrevivirá.
-        \item[(b)] Nadie recibirá más de cinco disparos.
-        \item[(c)] Los caminos de las balas no se cruzan.
-        \item[(d)] Los segmentos formados por las trayectorias de las balas no forman un polígono convexo cerrado.
-    \end{itemize}
-    \begin{hint}
-    ..
-    \end{hint}
-\end{problem}
+Por ejemplo, para la secuencia \(1, 9, 3, 8, 2, 7, 4, 6, 5, 10\):
+\begin{itemize}
+    \item La subsecuencia creciente \(1, 3, 4, 5, 10\) tiene longitud 5.
+    \item La subsecuencia decreciente \(9, 8, 7, 6\) tiene longitud 4.
+\end{itemize}
 
-\begin{problem}
-    Considere tres escuelas, cada una con \(n\) alumnos. Cada estudiante tiene en total \(n + 1\) amigos en las otras dos escuelas donde él no estudia. Pruebe que es posible seleccionar un estudiante de cada escuela de tal forma que los tres se conozcan mutuamente.
-    \begin{hint}
-    ..
-    \end{hint}
-\end{problem}
-
-\begin{problem}
-    En cada punto de la cuadrícula del plano se coloca un entero positivo. Cada uno de esos números es el promedio aritmético de sus cuatro vecinos. Muestre que todos los números son iguales.
-    \begin{hint}
-    ..
-    \end{hint}
-\end{problem}
-
-\begin{problem}
-    En cada casa de un tablero \(8 \times 8\) existe un número que puede ser 0 o 1. Para cada casa que contiene un 0, la suma de los números escritos en las casas que están o en la misma fila o en la misma columna de esta casa es mayor o igual a 8. Pruebe que la suma de todos los números en el tablero es mayor o igual a 32.
-    \begin{hint}
-    ..
-    \end{hint}
-\end{problem}
-
-\begin{problem}
-    El parlamento de Bruzundanga consiste en una casa. Todo miembro tiene como máximo tres enemigos entre los restantes. Muestre que es posible separar la casa en dos casas de tal forma que cada miembro tenga como máximo un enemigo en su casa.
-    \begin{hint}
-    ..
-    \end{hint}
-\end{problem}
-
-\begin{problem}[Torneo de las Ciudades 1987]
-    \begin{itemize}
-        \item[(a)] \(3n\) estrellas son colocadas en un tablero \(2n \times 2n\). Pruebe que podemos eliminar \(n\) estrellas de tal forma que no sobre ninguna línea horizontal o vertical con más de una estrella.
-        \item[(b)] \(7n\) estrellas son colocadas en un tablero \(3n \times 3n\). Pruebe que podemos eliminar \(n\) estrellas de tal forma que no sobre ninguna línea horizontal o vertical con más de una estrella.
-    \end{itemize}
-        \begin{hint}
-    ..
-    \end{hint}
-\end{problem}
-
-\begin{problem}
-    En una cuadrícula infinita se coloca un número entero en cada casilla. El número escrito en cada casilla es el promedio aritmético de los números escritos en las cuatro casillas vecinas. Pruebe que todos los números son iguales.
-    \begin{hint}
-    ..
-    \end{hint}
-\end{problem}
+En este caso, ambos tipos de subsecuencia existen y cumplen con el teorema.
 
 \end{document}
