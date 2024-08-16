@@ -1,0 +1,111 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\graphicspath{ {./images/} }
+
+\usepackage{answers}
+\Newassociation{hint}{hintitem}{all-hints}
+\renewcommand{\solutionextension}{out}
+\renewenvironment{hintitem}[1]{\item[\bfseries #1.]}{}
+
+\usepackage{venndiagram,multicol,hyperref,graphicx,array,xskak}
+
+\begin{document}
+\title{Combinatoria Geométrica}
+\author{Ricardo Largaespada}
+\date{17 Agosto 2024}
+
+\maketitle
+\section{Introducción}
+
+La combinatoria geométrica es una disciplina que explora cómo se pueden combinar y organizar formas geométricas de manera que cumplan ciertas condiciones. En el contexto de las olimpiadas matemáticas, esto significa resolver problemas que requieren una mezcla de creatividad geométrica y habilidad combinatoria.
+
+\begin{example}[Cono Sur 2000]
+    Un polígono \( S \) está contenido en el interior de un cuadrado de lado \( a \). Demuestre que hay al menos dos puntos del polígono que están separados por una distancia mayor o igual a \( S/a \).
+\end{example}
+Solución. Suponga que cualquier par de puntos del polígono están separados por una distancia menor que \( S/a \). Considere el punto más a la izquierda y el punto más a la derecha. Si \( b \) es la diferencia entre sus abscisas, tenemos
+\[
+S \leq a \cdot b \implies \frac{S}{a} \leq b.
+\]
+Por otro lado, \( XY \geq b \). Por lo tanto,
+\[
+XY \geq \frac{S}{a}.
+\]
+
+\begin{example}[Ibero 1997]
+    Sea \( P = \{P_1, P_2, \ldots, P_{1997}\} \) un conjunto de 1997 puntos en el interior de un círculo de radio 1, siendo \( P_1 \) el centro del círculo. Para \( k = 1, 2, \ldots, 1997 \), sea \( x_k \) la distancia del punto \( P_k \) al punto de \( P \) más cercano a \( P_k \). Demuestre que
+\[
+x_1^2 + x_2^2 + \cdots + x_{1997}^2 \leq 9.
+\]
+\end{example}
+
+Solución. Note que \( x_k \leq 1 \) para todo \( k \). Para cada \( k = 1, \ldots, 1997 \), trace una circunferencia de radio \( x_k/2 \) y centro en \( P_k \). Estas 1997 circunferencias no se intersectan (como máximo se tocan) y están todas dentro de una circunferencia \( \Gamma \) de centro en \( P_1 \) y radio \( 3/2 \). De esta forma, la suma de sus áreas es menor que el área de \( \Gamma \). Escribiendo esto en una ecuación, tenemos:
+\[
+\sum_{k=1}^{1997} \left(\frac{x_k}{2}\right)^2 \leq \frac{9\pi}{4}.
+\]
+Dividiendo todo por \( \pi/4 \), obtenemos el resultado buscado.\\
+
+\begin{example}
+    Sea \( C \) un círculo de radio 16 y \( A \) un anillo con radio interior 2 y radio exterior 3. Suponga ahora que un conjunto \( S \) de 650 puntos es seleccionado en el interior de \( C \). Demuestre que podemos colocar el anillo \( A \) en el plano de modo que cubra al menos 10 puntos de \( S \).
+\end{example}
+Solución. Suponga que una copia de \( A \) está centrada en cada uno de los 650 puntos de \( S \). Considere un círculo \( D \), concéntrico con \( C \) y de radio 19.
+
+Note que el área de \( A \) es \( 32\pi - 22\pi = 5\pi \). De esta forma, las 650 copias de \( A \) harán una supercobertura de área de \( 650 \times 5\pi = 3250\pi \). Ahora, si cada punto de \( D \) es cubierto por no más de 9 anillos, el área cubierta no puede ser mayor que \( 9 \times (19^2 \pi) = 3249\pi \). Por lo tanto, existe un punto \( X \) de \( D \) que está cubierto por al menos 10 anillos. Si \( Y_i \) es el centro de un anillo que cubre \( X \), el anillo de centro \( X \) también cubrirá a \( Y_i \). Pues \( 2 \leq XY_i \leq 3 \). Así, este anillo también cubre 10 puntos de \( S \).
+
+\begin{example}[Shortlist IMO 1989]
+     Tenemos un conjunto finito de segmentos en el plano, de medida total 1. Demuestre que existe una recta \( \ell \) tal que la suma de las medidas de las proyecciones de estos segmentos sobre la recta \( \ell \) es menor que \( 2/\pi \).
+\end{example}
+Solución. Vamos a trasladar los segmentos de modo que sus puntos medios coincidan en un punto \( V \). Vamos a designar los \( 2n \) extremos por \( A_1, A_2, \ldots, A_n, A'_1, A'_2, \ldots, A'_n \). A partir de un punto \( P_n' \) dibujamos el segmento \( P_n'P_1 \) igual y paralelo a \( VA_1 \), a partir de \( P_1 \) dibujamos el segmento \( P_1P_2 \) igual y paralelo a \( VA_2 \), y así sucesivamente obteniendo \( P_3, \ldots, P_n, P', \ldots, P_n' \), que es un polígono convexo \( P \) de \( 2n \) vértices, con un centro de simetría \( O \). Pues los pares de lados opuestos son iguales y paralelos. Elija un par de lados opuestos cuya distancia \( D \) sea mínima. Considere el círculo \( \Gamma \) de centro \( O \) y diámetro \( D \); este es tangente a los dos lados opuestos y está interior al polígono. Entonces,
+\[
+\pi D < \text{perímetro}(P) \sum_{i=1}^n s_i = 1.
+\]
+De esta forma, \( D < 1/\pi \). Por otro lado, las proyecciones ortogonales de todos los \( 2n \) lados de \( P \) sobre \( T T' \) tienen medida total igual a \( 2D \). Así, como \( 2D < 2/\pi \), se sigue el resultado.
+
+\Opensolutionfile{all-hints}
+
+\section{Problemas Propuestos}
+
+\begin{problem}
+Un \( n \)-ágono convexo \( M \) está particionado en triángulos por varias diagonales que no se cortan. Además, cada vértice de \( M \) pertenece a un número impar de tales triángulos. Demuestre que \( n \) es divisible por 3.
+    \begin{hint}
+    Considere la suma total de los ángulos internos de todos los triángulos. Cada triángulo contribuye con 180° a la suma total de los ángulos internos. Luego, observe cómo los vértices del \( n \)-ágono contribuyen a esta suma. Analice cómo la paridad (número impar) de la participación de los vértices en los triángulos influye en la divisibilidad de \( n \).
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+En el centro de un terreno cercado cuadrado se encuentra un lobo, y en cada vértice del cuadrado hay un perro. El lobo puede correr por todo el terreno, mientras que los perros pueden correr solo por los bordes. Se sabe que los perros (que tienen todos la misma velocidad) son 1.5 veces más rápidos que el lobo. Demuestre que los perros pueden coordinar sus movimientos de modo que el lobo no pueda escapar del terreno.
+    \begin{hint}
+    Calcule la velocidad efectiva de los perros en relación con el área del cuadrado y el tiempo que les lleva rodear el cuadrado. Luego, demuestre que los perros pueden coordinarse para cubrir cada posible posición del lobo en el cuadrado y mantenerlo dentro del terreno, usando la relación de velocidad y la estrategia de movimiento en el borde del cuadrado.
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+Se colocan 100 puntos en el plano. Demuestre que podemos usar algunos discos para cubrir estos puntos de modo que la suma de los diámetros sea menor que 100 y la distancia entre cualesquiera dos discos sea mayor que 1.
+    \begin{hint}
+    Use el principio de la bola de radio y el concepto de empaquetamiento. Primero, demuestre que es posible cubrir los puntos con discos de un diámetro adecuado mientras se asegura que los discos no se solapen demasiado. Luego, utilice el hecho de que la suma de los diámetros puede ser controlada si se elige el tamaño adecuado de los discos.
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+Un conjunto finito de segmentos, con longitud total 18, está en el interior de un cuadrado unitario (asuma que el interior también incluye los bordes y vértices). Los segmentos son paralelos a los lados del cuadrado y pueden cruzarse. Demuestre que entre las regiones en que se divide el cuadrado, hay al menos una de área no menor que 0.01.
+    \begin{hint}
+    Divida el cuadrado en regiones mediante los segmentos y considere la suma total de las áreas de las regiones. Use el hecho de que el área total del cuadrado es 1 y que la suma de las áreas de las regiones generadas debe ser al menos 1. Luego, aplique el principio de caja de Erdős-Szekeres para demostrar que al menos una de las regiones tiene un área suficientemente grande.
+    \end{hint}
+\end{problem}
+
+\begin{problem}
+Sea \( n \geq 5 \) un entero positivo. Determine el mayor entero \( k \) para el cual existe un polígono con \( n \) vértices (convexo o no, pero sin auto-intersecciones) que tenga \( k \) ángulos internos de \( 90^\circ \).
+    \begin{hint}
+    Use la fórmula para la suma de los ángulos internos de un polígono y observe cómo los ángulos de 90° afectan la suma total de los ángulos internos. Considere el polígono general y el número de ángulos que pueden ser 90° sin violar la fórmula de la suma de los ángulos internos del polígono. Esto ayudará a encontrar el valor máximo posible de \( k \).
+    \end{hint}
+\end{problem}
+
+\Closesolutionfile{all-hints}
+
+\section{Sugerencias y Soluciones}
+\begin{enumerate}
+\input{all-hints.out}
+\end{enumerate}
+
+\end{document}
