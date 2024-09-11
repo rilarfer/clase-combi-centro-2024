@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage{answers}
+
+% Definir las asociaciones para sugerencias y soluciones
+\Newassociation{hint}{HintFile}{all-hints}
+\Newassociation{solu}{SolutionFile}{all-solutions}
+
+% Configurar el formato de las sugerencias y soluciones
+\renewenvironment{HintFile}[1]{\item[\textbf{#1.}]}{}
+\renewenvironment{SolutionFile}[1]{\item[\textbf{#1.}]}{}
+
+\begin{document}
+
+% Abrir los archivos para sugerencias y soluciones
+\Opensolutionfile{all-hints}
+\Opensolutionfile{all-solutions}
+
+\section{Problemas Propuestos}
+
+Decir cuántos términos tiene la expansión de $(a+b+c)^8$ y de qué forma son.
+\begin{hint}
+Piensa en cada término de la expansión como un producto del tipo $a^{x_1} b^{x_2} c^{x_3}$, donde $x_1 + x_2 + x_3 = 8$.
+\end{hint}
+\begin{solu}
+Cada término de la expansión de $(a+b+c)^8$ es de la forma $a^{x_1} b^{x_2} c^{x_3}$, donde $x_1 + x_2 + x_3 = 8$ y $x_1, x_2, x_3$ son enteros no negativos. Este es un problema de contar el número de soluciones enteras no negativas para esta ecuación, lo que equivale a:
+\[
+\binom{8+3-1}{3-1} = \binom{10}{2} = 45.
+\]
+Por lo tanto, hay 45 términos en la expansión y cada término tiene la forma $a^{x_1} b^{x_2} c^{x_3}$.
+\end{solu}
+
+% Cerrar los archivos para sugerencias y soluciones
+\Closesolutionfile{all-hints}
+\Closesolutionfile{all-solutions}
+
+\section{Sugerencias}
+
+\textbf{Sugerencias:}
+\begin{enumerate}
+\input{all-hints}
+\end{enumerate}
+
+\section{Soluciones}
+
+\textbf{Soluciones:}
+\begin{enumerate}
+\input{all-solutions}
+\end{enumerate}
+
+\end{document}

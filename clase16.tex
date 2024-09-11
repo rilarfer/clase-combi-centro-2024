@@ -1,0 +1,171 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\graphicspath{ {./images/} }
+
+\usepackage{answers}
+\Newassociation{hint}{hintitem}{all-hints}
+\renewcommand{\solutionextension}{out}
+\renewenvironment{hintitem}[1]{\item[\bfseries #1.]}{}
+
+\usepackage{venndiagram,multicol,hyperref,graphicx,array,xskak}
+\usepackage{tikz}
+\usetikzlibrary{positioning,trees}
+
+\begin{document}
+\title{Combinatoria Divisibilidad}
+\author{Ricardo Largaespada}
+\date{31 Agosto 2024}
+
+\maketitle
+
+\section{Introducción}
+
+Continuaremos aplicando las principales ideas que aprendimos durante el curso de Combinatoria en otras áreas de la Matemática. Esta vez, abordaremos problemas que involucren algún conocimiento sobre Teoría de Números.
+
+
+\begin{example}[Rusia 1999]
+Un conjunto de números naturales es elegido tal que entre cualesquiera 1999 números naturales consecutivos, existe un número elegido. Demuestre que existen dos números elegidos tal que uno de ellos divide al otro.
+\end{example}
+\textbf{Solución.} Construya una tabla con 1999 columnas y 2000 filas. En la primera fila escriba 1, 2, \dots, 1999. Defina las entradas de las futuras filas recursivamente como sigue: suponga que las entradas en la fila $i$ son $k + 1, k + 2, \dots, k + 1999$ y que su producto es $M$. Llene la fila $i + 1$ con $M + k + 1, M + k + 2, \dots, M + k + 1999$. Todas las entradas en la fila $i + 1$ son mayores que las de la fila $i$. Además, cada entrada divide a la entrada inmediatamente abajo (y consecuentemente toda entrada debajo de esta). En cada fila existen 1999 números consecutivos, y así cada fila contiene un número elegido. Como tenemos 2000 filas, por el principio del palomar existen dos números elegidos en la misma columna. Pero entonces uno de ellos divide al otro, como se deseaba.
+
+\begin{example}[India 1998]
+Sea $M$ un entero positivo y considere el conjunto $S = \{n \in \mathbb{N} \mid M^2 \leq n < (M + 1)^2\}$. Pruebe que los productos de la forma $ab$, con $a, b \in S$, son todos distintos.
+\end{example}
+\textbf{Solución.} Probaremos la afirmación por contradicción. Suponga lo contrario, es decir, que existen $a, b, c, d \in S$ tales que $ab = cd$. Asuma, sin pérdida de generalidad, que $a < c, d$. Sean $p = \text{mcd}(a, c)$, $q = a/p$ y $r = c/p$. Entonces $\text{mcd}(q, r) = 1$. De ahí, como $q \mid \frac{ab}{p} = \frac{cd}{p} = rd$, sigue que $q \mid d$. Sea ahora $s = d/q$. Entonces $b = \frac{cd}{a} = rs$, de modo que $a = pq$, $b = rs$, $c = pr$ y $d = qs$, con $p, q, r, s$ enteros positivos. Como $c > a$, tenemos que $r > q \Rightarrow r \geq q + 1$. Análogamente, $d > a \Rightarrow s \geq p + 1$. Así,
+\[
+b = rs \geq (p + 1)(q + 1) = pq + p + q + 1 \geq pq + 2\sqrt{pq} + 1 \geq a + 2\sqrt{a} + 1 \geq M^2 + 2M + 1 = (M + 1)^2,
+\]
+una contradicción, ya que $b$ pertenece a $S$.
+
+\begin{example}
+Demuestre que existe un bloque de 2002 enteros positivos consecutivos que contiene exactamente 150 primos. (Puede usar el hecho de que existen 168 primos menores de 1000.)
+\end{example}
+\textbf{Solución.} Defina la función $f : \mathbb{N} \rightarrow \mathbb{N}$ por $f(a) = $ cantidad de primos entre los números $a, a + 1, \dots, a + 2001$. Como existen 168 primos desde 1 hasta 1000, tenemos $f(1000) > 168$. Observe que:
+\begin{itemize}
+    \item $f(a + 1) = f(a) + 1$ si $a$ es compuesto y $a + 2002$ es primo;
+    \item $f(a + 1) = f(a)$ si ambos $a$ y $a + 2002$ son compuestos o primos;
+    \item $f(a + 1) = f(a) - 1$ si $a$ es primo y $a + 2002$ es compuesto.
+\end{itemize}
+Estos tres casos son mutuamente excluyentes. Además, tenemos $f(2003! + 2) = 0$ (verifique). Como $f$ disminuye en cada paso como máximo en 1 y parte de 168 hasta llegar a 0, $f(n)$ debe ser igual a 150 para algún $n$ entre 1 y $2003! + 2$, como queríamos.
+
+\begin{example}[Rioplatense 1999]
+Sean $p_1, p_2, \dots, p_k$ primos distintos. Considere todos los enteros positivos que utilizan solo estos primos (no necesariamente todos) en su factorización en números primos, formando así una secuencia infinita $a_1 < a_2 < \dots < a_n < \dots$. Demuestre que, para cada natural $c$, existe un natural $n$ tal que $a_{n+1} - a_n > c$.
+\end{example}
+\textbf{Solución.} Suponga, por absurdo, que existe $c > 0$ tal que $a_{n+1} - a_n \leq c, \forall n \in \mathbb{N}$. Esto significa que las diferencias entre los términos consecutivos de $(a_n)_{n \geq 1}$ pertenecen al conjunto $\{1, 2, \dots, c\}$, luego son finitas. Sean $d_1, d_2, \dots, d_r$ esas diferencias. Sea $\alpha_i$ el mayor exponente de $p_i$ que aparece en la factorización de todos los $d_j$.
+
+Considere entonces el número $M = p_1^{\alpha_1 + 1} p_2^{\alpha_2 + 1} \dots p_k^{\alpha_k + 1}$. Es claro que $M$ pertenece a la secuencia, es decir, $M = a_n$, para algún $n$. Veamos quién será $a_{n+1}$. Por hipótesis, existe $i$ tal que $a_{n+1} - a_n = d_i$. Como $a_{n+1} > a_n$, existe un primo $p_j$ que divide $a_{n+1}$ con exponente mayor o igual a $\alpha_j + 1$. De lo contrario,
+\[
+a_n < a_{n+1} < p_1^{\alpha_1 + 1} p_2^{\alpha_2 + 1} \dots p_k^{\alpha_k + 1} = a_n,
+\]
+absurdo. De ahí, $p_j^{\alpha_j + 1} \mid a_n \Rightarrow p_j^{\alpha_j + 1} \mid d_i$, nuevamente un absurdo, por la maximalidad de $\alpha_j$. Por lo tanto, el conjunto de todas las diferencias no puede ser finito y, por lo tanto, dado cualquier $c > 0$, existe un natural $n$ tal que $a_{n+1} - a_n > c$.
+
+\begin{example}[EEUU 1998]
+Pruebe que, para cada entero $n \geq 2$, existe un conjunto $S$ de $n$ enteros positivos tal que $(a - b) \mid ab$ para cualesquiera $a$ y $b$ distintos pertenecientes a $S$.
+\end{example}
+\textbf{Solución:} A la hora de montar cualquier ejemplo de conjunto, haga siempre casos pequeños. Considere $n = 2$, $n = 3$, $n = 4$, $n = 5$ y vea la forma del ejemplo. Recuerde siempre seguir un patrón en ese momento, pues si el ejemplo que encuentra para 3 tiene algo en común con el ejemplo para 2, el ejemplo para 4 se parece al de 3 y así sucesivamente. ¡Perfecto! El resto saldrá por inducción. Después de hacer algunos casos pequeños, encontramos la forma del conjunto $S$: dado $n$, construiremos $S$ con $n$ elementos tal que $(a - b) \mid a$ y $(a - b) \mid b$ para todos $a, b$ pertenecientes a $S$. Un conjunto con esas propiedades claramente satisface el enunciado. Comience con el conjunto $\{2, 3\}$. Paso inductivo: suponga que encontramos un conjunto $S$, $|S| = n$, que satisface las condiciones del enunciado. Sea $m$ el mínimo múltiplo común de los elementos de $S$. Tome el conjunto $S' = \{m + S\} \cup \{m\}$ (si $X$ es un conjunto y $a$ es un número cualquiera, el conjunto $X + a$ o $a + X$ es dado por $\{a + x \mid x \in X\}$). Luego, $|S'| = n + 1$. Por los casos particulares, sospechamos que $S'$ satisface las propiedades requeridas. Veamos. Si $a', b'$ son elementos cualesquiera de $S'$, podemos considerar dos casos:
+\begin{itemize}
+    \item $a' = m + a$, $b' = m + b$: entonces $a' - b' = (m + a) - (m + b) = a - b$. Como $(a - b) \mid a$, $(a - b) \mid b$ (por la hipótesis inductiva) y $m$ es múltiplo común de $a$ y $b$, sigue que $(a' - b') \mid (m + a) = a'$ y $(a' - b') \mid (m + b) = b'$.
+    \item $a' = m + a$, $b' = m$: entonces $a' - b' = (m + a) - m = a \Rightarrow (a' - b') \mid a'$ y $(a' - b') \mid b'$, ya que $m$ es múltiplo de $a$.
+\end{itemize}
+
+\Opensolutionfile{all-hints}
+\section{Problemas Propuestos}
+
+\begin{problem}[Ibero 1998] Encuentre el menor número natural $n$ con la propiedad de que entre cualesquiera $n$ números distintos del conjunto $\{1, 2, 3, \dots, 999\}$ podemos encontrar cuatro números distintos $a, b, c, d$ tales que $a + 2b + 3c = d$.
+\begin{hint}
+Considera analizar subconjuntos específicos del conjunto dado y busca patrones que puedan ayudar a reducir el problema.
+\begin{proof}
+    Inicialmente, seleccionamos los últimos $k$ enteros de manera que se cumpla la igualdad mencionada. Dado que el elemento más pequeño del conjunto es:
+
+\[ 3a + 2(a + 1) + (a + 2) < 999 \iff a < 166 \]
+
+Por lo tanto, el conjunto $\{165, 166, \dots, 999\}$, con $k = 835$, satisface las condiciones mencionadas. Así, tenemos que $n \geq 835$. Un buen comienzo sería ver si $835$ es la solución o si $n > 835$.
+
+Dividamos el conjunto inicial en dos subconjuntos $A = \{1, 2, \dots, 166\}$ y $B = \{167, 168, \dots, 999\}$. Claramente, al seleccionar al menos dos elementos de $A$, supongamos que hemos seleccionado $n + 2$ elementos en $A$, que forman un subconjunto $A' = \{x_1, x_2, \dots, x_{n+2}\}$, y $833 - n$ elementos en $B$, formando el conjunto $B' = \{y_1, y_2, \dots, y_{833 - n}\}$, con $n \geq 0$. Sean $x_1$ y $y_1$ los elementos más pequeños de $A$ y $B$, respectivamente. Note que $x_1 \leq 167 - (n + 2)$ y $167 + y_1 \leq n$. Así, para cualquier $x_p$ en $A$ diferente de $x_1$, se cumple:
+
+\[ 167 \leq y_1 + 2x_p + 3x_1 \leq 167 + n + 2 \cdot 166 + 3(167 - (n + 2)) \]
+\[ 167 \leq y_1 + 2x_p + 3x_1 \leq 994 - 2n \]
+
+Por lo tanto, la expresión $y_1 + 2x_p + 3x_1$ siempre está en $B$. Además, note que $x_p$ puede tomar $n + 1$ valores y $B'$ tiene $833 - n$ elementos. ¡Por lo tanto, al menos uno de estos $n + 1$ valores está en $B'$! Por lo tanto, $835$ es el valor más pequeño de $n$ con esta propiedad.
+\end{proof}
+\end{hint}
+
+\end{problem}
+
+\begin{problem}[Rumania 1999] Sea $p(x) = 2x^3 - 3x^2 + 2$, y sean
+\[
+S = \{p(n) \mid n \in \mathbb{N}, n \leq 1999\}, \quad T = \{n^2 + 1 \mid n \in \mathbb{N}\}, \quad U = \{n^2 + 2 \mid n \in \mathbb{N}\}.
+\]
+Pruebe que $S \cap T$ y $S \cap U$ tienen el mismo número de elementos.
+\begin{hint}
+Compara las formas de las funciones cuadráticas con la función cúbica para identificar los elementos comunes.
+\begin{proof}
+    Parece que $0 \in \mathbb{N}$ en este problema. Supongamos que $2n^3 - 3n^2 + 2 = p^2 + 1$, donde $0 \leq n \leq 1999$ y $p \geq 0$. Entonces:
+
+\[ 2n^3 - 3n^2 + 1 = p^2 \iff (n - 1)(2n^2 - n - 1) = p^2 \iff (n - 1)^2 (2n + 1) = p^2 \]
+
+Tenemos que $p(0) = 2$ y $p(1) = 1$, y si $n > 1$, entonces $2n + 1 \in \{3^2, 5^2, \dots, 63^2\}$. Note que los valores de $p(n)$ son distintos para estos $n$.
+
+Ahora supongamos que $2n^3 - 3n^2 + 2 = q^2 + 2$, donde $1 \leq n \leq 1999$ y $q \geq 1$. Entonces:
+
+\[ n^2 (2n - 3) = q^2 \]
+
+Tenemos que $p(0) = 2$ y si $n > 1$, entonces $2n - 3 \in \{1^2, 3^2, \dots, 63^2\}$.
+
+Por lo tanto, podemos concluir que el número de elementos en $S \cap T$ y $S \cap U$ es el mismo.
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}[Polonia 2000] La secuencia $p_1, p_2, \dots$ de números primos satisface la siguiente condición: para cada $n \geq 3$, $p_n$ es el mayor divisor primo de $p_{n-1} + p_{n-2} + 2000$. Pruebe que la secuencia es limitada.
+\begin{hint}
+Investiga las propiedades de la sucesión y cómo el término 2000 afecta a los divisores primos.
+\end{hint}
+\end{problem}
+
+\begin{problem}[Rusia 2000] Pruebe que el conjunto de todos los enteros positivos puede ser particionado en 100 subconjuntos no vacíos de modo que si tres enteros positivos satisfacen $a + 99b = c$, entonces dos de ellos pertenecen al mismo subconjunto.
+\begin{hint}
+Utiliza el principio de Dirichlet para considerar las combinaciones posibles de los enteros positivos bajo la condición dada.
+\end{hint}
+\end{problem}
+
+\begin{problem}[Lista Cono Sur 2007]
+Un subconjunto $M$ de $\{1, 2, 3, \dots, 15\}$ no contiene tres elementos cuyo producto sea un cuadrado perfecto. Determine el número máximo de elementos de $M$.
+\begin{hint}
+Analiza las propiedades de los productos de los números y sus factorizaciones primarias para evitar cuadrados perfectos.
+\end{hint}
+\end{problem}
+
+\begin{problem}[Reino Unido 1999]
+Para cada entero positivo $n$, sea $S_n = \{1, 2, \dots, n\}$.
+\begin{itemize}
+    \item[(a)] Para cuáles valores de $n$ es posible expresar $S_n$ como unión de dos subconjuntos no vacíos disjuntos tales que la suma de los elementos de cada subconjunto es la misma?
+    \item[(b)] Para cuáles valores de $n$ es posible expresar $S_n$ como unión de tres subconjuntos no vacíos disjuntos tales que la suma de los elementos de cada subconjunto es la misma?
+\end{itemize}
+\begin{hint}
+Considera el análisis de sumas parciales y cómo pueden dividirse los números naturales para satisfacer la condición.
+\end{hint}
+\end{problem}
+
+\begin{problem}[Irán 1999]
+Sea $S = \{1, 2, \dots, n\}$ y sean $A_1, A_2, \dots, A_k$ subconjuntos de $S$ tales que, para cualesquiera $1 \leq i_1, i_2, i_3, i_4 \leq k$, tenemos
+\[
+|A_{i_1} \cup A_{i_2} \cup A_{i_3} \cup A_{i_4}| \leq n - 2.
+\]
+Pruebe que $k \leq 2^{n-2}$.
+\begin{hint}
+Considera la relación entre los subconjuntos y el tamaño máximo posible que estos pueden tener bajo la restricción dada.
+\end{hint}
+\end{problem}
+
+
+\Closesolutionfile{all-hints}
+
+\section{Sugerencias y Soluciones}
+\begin{enumerate}
+\input{all-hints.out}
+\end{enumerate}
+
+\end{document}

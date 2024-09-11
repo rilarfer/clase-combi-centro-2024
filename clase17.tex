@@ -1,0 +1,371 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\graphicspath{ {./images/} }
+
+\usepackage{answers}
+\Newassociation{hint}{hintitem}{all-hints}
+\Newassociation{solu}{solutionitem}{all-solutions}
+\renewcommand{\solutionextension}{out}
+\renewenvironment{hintitem}[1]{\item[\bfseries #1.]}{}
+\renewenvironment{solutionitem}[1]{\item[\bfseries #1.]}{}
+
+\usepackage{venndiagram,multicol,hyperref,graphicx,array,xskak}
+\usepackage{tikz}
+\usetikzlibrary{positioning,trees}
+
+\begin{document}
+\title{Separadores}
+\author{Ricardo Largaespada}
+\date{07 Septiembre 2024}
+
+\maketitle
+
+\section{Introducción}
+
+En esta clase utilizaremos un truco clásico en problemas de conteo. Los \textbf{separadores} para resolver un problema. Ilustraremos la técnica de los separadores analizando el siguiente ejemplo.
+
+\begin{example}
+¿De cuántas formas pueden comprarse 20 galletas de una tienda que vende galletas de 5 sabores?
+\end{example}
+\textbf{Solución.} Supongamos que los sabores de las galletas son: vainilla (\(V\)), chocolate (\(C\)), nuez (\(N\)), azúcar (\(A\)) y mantequilla (\(M\)). Cada colección de 20 galletas puede representarse por 24 casillas (\(=\)) en las que se han puesto 4 separadores (\(|\)). Las galletas de cada tipo tienen los separadores a ambos lados de ellas:  la colección de 4 \(V\), 1 \(C\), 0 \(N\), 10 \(A\) y 5 \(M\) se representa por:
+
+\[
+= = = = | = | | = = = = = = = = = = | = = = = =
+\]
+
+Recíprocamente, una sucesión tal de casillas con separadores representa una colección de galletas. Entonces el resultado es de \(\binom{24}{4}\).
+
+\begin{example} 
+Supongamos que tenemos 9 bolas idénticas y 9 contenedores distinguibles. Queremos contar el número de formas de distribuir las bolas en los contenedores (puede haber varias o ninguna bola en el mismo contenedor).
+\end{example}
+\begin{center}
+    \includegraphics[scale=1]{images/clase_17_separadores.png}
+\end{center}
+\textbf{Solución} Para contar las diferentes distribuciones, solo nos interesa cuántas bolas hay en el primer contenedor, cuántas bolas hay en el segundo contenedor, etc. En otras palabras, el número de arreglos es el mismo que el número de listas ordenadas de enteros $(n_1, n_2, \dots, n_9)$ tales que $n_i \geq 0$ para todos $i$ y $n_1 + n_2 + \cdots + n_9 = 9$. Esto se llama una ecuación diofántica (con coeficientes 1).\\
+
+Ahora consideremos 17 objetos en línea. Vamos a elegir 8 de ellos para que sean los ``separadores''. Los otros objetos van a representar las bolas. Decimos que $n_1$ es el número de bolas antes del primer separador, $n_2$ es el número de bolas entre el primer separador y el segundo, $\dots$, $n_9$ es el número de bolas después del octavo separador. Es claro que obtenemos una lista del tipo que estamos buscando, y también que cualquiera de tales listas corresponde a una disposición de 9 bolas y 8 separadores en una línea. Por lo tanto, el número que estamos buscando es $\binom{17}{8}$.\\
+
+En el problema general, cuando queremos distribuir $n$ objetos idénticos en $m$ lugares, podemos hacerlo de $\binom{n+m-1}{m-1}$ maneras, y eso es igual al número de listas $(n_1, n_2, \dots, n_m)$ de enteros no negativos tales que $n_1 + n_2 + \cdots + n_m = n$.\\
+
+Los ejemplos anteriores son un caso particular de la siguiente situación:
+\begin{theorem}
+Dados números naturales $r$ y $N$, ¿cuántas $r$-adas $(a_1, a_2, \dots, a_r)$ de enteros no negativos $a_1, a_2, \dots, a_r$ se pueden encontrar de tal manera que $a_1 + a_2 + \cdots + a_r = N$?
+\end{theorem}
+Como vimos los ejemplos, la respuesta de esta pregunta se puede encontrar con separadores y es:
+
+\[
+\binom{N+r-1}{r-1}
+\]
+
+Consideremos ahora la misma situación planteada pero añadiendo ahora que los números $a_1, a_2, \dots, a_r$ son enteros positivos. Esto significa que no podemos permitir $a_i = 0$ en esa expresión. En este caso no se podrán $N$ casillas y los separadores arbitrariamente en los espacios que quedan entre las casillas. Sin embargo, esta misma situación puede resolverse usando la misma idea anterior. Exploraremos este caso en un contexto más general más a la situación, en el siguiente:
+
+\begin{theorem}
+Dados naturales $r$ y $N$, el número de $r$-adas $(a_1, a_2, \dots, a_r)$ de enteros positivos $a_1, a_2, \dots, a_r$ que satisfacen $a_1 + a_2 + \cdots + a_r = N$ sujetos a la restricción: \(a_1\ge k_1, a_2\ge k_2,\ldots, a_r
+ge k_r\), donde \(k_1,k_2,\ldots, k_r\), son enteros dados,es
+\[
+\binom{N-(k_1+k_2+\cdots+k_r)-1}{r-1}.
+\]
+\end{theorem}
+\begin{proof}
+Para $i = 1, 2, \dots, r$, sea $b_i = a_i - k_i$. Observemos que entonces $b_i \geq 0$, y que $a_1 + a_2 + \cdots + a_r = N$ se traduce en $b_1 + b_2 + \cdots + b_r = N - (k_1+k_2+\cdots+k_3))$. Esto muestra cómo se ha reducido el problema al problema ya resuelto.
+\end{proof}
+
+\begin{example}
+¿De cuántas formas pueden escogerse 8 enteros $x_1, x_2, \dots, x_8$ no necesariamente distintos, tales que $1 \leq x_1 \leq a_2 \leq \cdots \leq x_8 \leq 8$?
+\end{example}
+\textbf{Solución. Primera forma.} Hagamos la cuenta según cuántos grupos $i$ de números iguales hay ($i = 1, 2, \dots, 8$). Por ejemplo, algunas sucesiones de enteros que tienen $i = 3$ son $(1, 4, 4, 4, 4, 7, 7, 7)$, $(3, 3, 3, 3, 6, 6, 6, 7)$, $(5, 5, 5, 6, 6, 6, 7, 7)$. Para contar de qué forma se pueden poner $i$ grupos, hay que poner $i - 1$ separadores en los huecos que hay en 8 casillas; en los ejemplos de arriba, las posiciones respectivas de los separadores serían $| \circ\circ\circ | \circ\circ\circ |$ y $| \circ\circ\circ | \circ\circ\circ | \circ\circ\circ |$.\\
+
+Entonces, el número de formas de poner los separadores es $\binom{7}{i-1}$. Una vez elegida la posición de los separadores hay que escoger entre los 6 enteros del conjunto $\{1, 2, 3, 4, 5, 6, 7, 8\}$ donde pudieron no ordenarse mágicamente. En estos ejemplos, los subconjuntos elegidos fueron, respectivamente, $\{1, 4, 7\}$, $\{3, 6, 7\}$, y $\{5, 6, 7\}$, se puede hacer de $\binom{6}{i}$ maneras. Entonces la respuesta es:
+
+\[
+\binom{6}{1} \binom{7}{0} + \binom{6}{2} \binom{7}{1} + \binom{6}{3} \binom{7}{2} + \cdots + \binom{6}{6} \binom{7}{5}.
+\]
+
+\textbf{Segunda forma.} Pongamos 15 casillas y marquemos 8 lugares, de manera que el sexto representado por $1 + r$ número de combinaciones. Hasta la primera $i$ desaparecen; y así sucesivamente, hasta que en este caso finalmente se marca el séptimo entero de desplazarse hacia la octava marca. Entonces la respuesta es:
+
+\[
+\binom{7}{0} \binom{n+1}{1} + \binom{7}{1} \binom{n+1}{2} + \cdots + \binom{7}{7} \binom{n+1}{8}.
+\]
+
+Lo probado en este ejemplo es fácil extendiéndolo a la fórmula de números naturales:
+
+\[
+\binom{n+1}{1} + \binom{n+1}{2} + \cdots + \binom{n+1}{n+1} = \binom{n+1}{2}
+\]
+
+\begin{example}
+Sea $m$, $k$ números enteros positivos. ¿Cuántas listas $(n_1, n_2, \dots, n_k)$ de números enteros hay tales que $0 \leq n_1 \leq n_2 \leq \cdots \leq n_k \leq m$?
+\end{example}
+\textbf{Primera Solución (con separadores)} Consideremos una disposición de $m$ bolas y $k$ separadores. Si etiquetamos los separadores de izquierda a derecha, podemos definir $n_i$ como el número de bolas a la izquierda del separador $i$-ésimo. Está claro que el número de listas que estamos buscando es el mismo que el número de arreglos de $m$ bolas y $k$ separadores, que es $\binom{m+k}{k}$.\\
+
+\textbf{Segunda Solución (sin separadores)} Considere la lista $(m_1, m_2, \dots, m_k)$ definida por $m_i = n_i + i$. Entonces tenemos que $1 \leq m_1 < m_2 < \cdots < m_k \leq m + k$. Para cada lista $(m_1, m_2, \dots, m_k)$ que satisface esta condición, podemos construir $(n_1, n_2, \dots, n_k)$. Sin embargo, los $m_i$ son diferentes entre sí, y para cada elección de diferentes números $k$, generan solo una de dichas listas. Por lo tanto, solo tenemos que elegir $k$ números entre $1$ y $m+k$, para lo cual hay $\binom{m+k}{k}$ maneras posibles.\\
+
+\textbf{Tercera Solución (usando el ejemplo anterior)} Consideremos $b_1 = n_1$, $b_2 = n_2 - n_1$, $b_3 = n_3 - n_2$, $\dots$, $b_{k+1} = m - n_k$. Sabemos que $b_i \geq 0$ para todos $i$ y que $b_1 + b_2 + \cdots + b_{k+1} = m$. Las listas $(b_1, b_2, \dots, b_{k+1})$ con esta propiedad son el mismo número de listas $\binom{m+k}{k}$ que estábamos buscando antes. Por el ejemplo anterior, sabemos que hay $\binom{m+k-1}{k}$ tales listas. En esta solución, si solo definimos $b_1, b_2, \dots, b_k$ y fijamos $n_k = j$, sabemos que hay un total de $\binom{j+k-1}{k-1}$ listas posibles. Como $j$ puede ir de $0$ a $m$, sabemos que en total hay \[\binom{k-1}{k-1} + \binom{k}{k-1} + \cdots + \binom{m+k-1}{k-1}.\]
+
+\Opensolutionfile{all-hints}
+\Opensolutionfile{all-solutions}
+
+\section{Problemas Propuestos}
+\begin{problem}
+Decir cuántos términos tiene la expansión de $(a+b+c)^8$ y de qué forma son.
+\begin{hint}
+Piensa en cada término de la expansión como un producto del tipo $a^{x_1} b^{x_2} c^{x_3}$, donde $x_1 + x_2 + x_3 = 8$. 
+\begin{proof}
+Cada término de la expansión de $(a+b+c)^8$ es de la forma $a^{x_1} b^{x_2} c^{x_3}$, donde $x_1 + x_2 + x_3 = 8$ y $x_1, x_2, x_3$ son enteros no negativos. Este es un problema de contar el número de soluciones enteras no negativas para esta ecuación, lo que equivale a:
+\[
+\binom{8+3-1}{3-1} = \binom{10}{2} = 45.
+\]
+Por lo tanto, hay 45 términos en la expansión y cada término tiene la forma $a^{x_1} b^{x_2} c^{x_3}$.
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Demostrar que el número de listas $(b_1, b_2, \dots, b_{m+1})$ de enteros positivos tales que $b_1 + b_2 + \cdots + b_{m+1} = n + 1$ es $\binom{n}{m}$.
+\begin{hint}
+Considera la transformación $b_i' = b_i - 1$ para convertir la suma en una ecuación con enteros no negativos.
+\begin{proof}
+La ecuación dada es $b_1 + b_2 + \cdots + b_{m+1} = n + 1$, donde cada $b_i \geq 1$. Definimos $b_i' = b_i - 1$, entonces cada $b_i' \geq 0$, y la ecuación se convierte en:
+\[
+(b_1' + 1) + (b_2' + 1) + \cdots + (b_{m+1}' + 1) = n + 1.
+\]
+Simplificando, obtenemos:
+\[
+b_1' + b_2' + \cdots + b_{m+1}' = n - m + 1.
+\]
+Ahora, el número de soluciones enteras no negativas de esta ecuación es:
+\[
+\binom{(n - m + 1) + m}{m} = \binom{n}{m}.
+\]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Encuentra el número de formas de colocar 3 torres en un tablero de ajedrez de $5 \times 5$ de manera que ninguna de ellas se ataque entre sí.
+\begin{hint}
+Recuerda que las torres solo se atacan si están en la misma fila o columna. Considera que debes elegir 3 filas y 3 columnas para colocar las torres.
+\begin{proof}
+Primero, seleccionamos 3 filas de las 5 disponibles, lo cual se puede hacer de $\binom{5}{3}$ maneras. Luego, seleccionamos 3 columnas de las 5 disponibles, lo cual también se puede hacer de $\binom{5}{3}$ maneras. Como cada torre debe colocarse en una combinación única de fila y columna, no hay más restricciones. Por lo tanto, el número total de formas de colocar las torres es:
+\[
+\binom{5}{3} \times \binom{5}{3} = 10 \times 10 = 100.
+\]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Un número de personas se sienta alrededor de una mesa redonda. Se sabe que hay 7 mujeres que tienen a una mujer a su derecha y 12 mujeres que tienen a un hombre a su derecha. Sabemos que 3 de cada 4 hombres tienen a una mujer a su derecha. ¿Cuántas personas están sentadas en la mesa?
+\begin{hint}
+Utiliza las relaciones dadas para establecer ecuaciones que relacionen el número de hombres y mujeres en la mesa.
+\begin{proof}
+Supongamos que hay $w$ mujeres y $h$ hombres en la mesa. Se nos da que 7 mujeres tienen a otra mujer a su derecha y 12 mujeres tienen a un hombre a su derecha, por lo tanto:
+\[
+w = 7 + 12 = 19.
+\]
+Además, se nos dice que 3 de cada 4 hombres tienen a una mujer a su derecha, lo que significa que:
+\[
+\frac{3}{4}h = w = 19.
+\]
+De esta ecuación, despejamos para $h$:
+\[
+h = \frac{4}{3} \times 19 = 25.33.
+\]
+Sin embargo, como $h$ debe ser un número entero, esta solución no es posible con los números proporcionados. Revisando el problema y verificando que estos valores cumplen el criterio planteado, la cantidad total de personas se deduce que es 19 mujeres más un ajuste numérico para los hombres, que no es trivialmente calculable en base a la información proporcionada.
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Tienes 10 caramelos idénticos y quieres repartirlos entre 4 niños. ¿De cuántas maneras diferentes se pueden repartir los caramelos si no hay restricciones?
+\begin{hint}
+Piensa en los caramelos como unidades a distribuir, y los niños como divisiones (separadores) entre estas unidades.
+\begin{proof}
+Para resolver este problema, podemos utilizar la técnica de separadores. Queremos repartir 10 caramelos entre 4 niños, lo que equivale a encontrar el número de soluciones enteras no negativas de la ecuación:
+\[ x_1 + x_2 + x_3 + x_4 = 10. \]
+La cantidad de formas de repartir los caramelos es equivalente a colocar 3 separadores entre los 10 caramelos. El número de formas de hacerlo es dado por:
+\[ \binom{10+4-1}{4-1} = \binom{13}{3}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Encuentra el número de soluciones enteras no negativas para la ecuación \(x_1 + x_2 + x_3 + x_4 + x_5 = 20\).
+\begin{hint}
+Utiliza la técnica de separadores. Cada variable \(x_i\) representa la cantidad de "objetos" (por ejemplo, caramelos) asignada a un "grupo" (por ejemplo, un niño).
+\begin{proof}
+Queremos contar el número de soluciones enteras no negativas para la ecuación:
+\[ x_1 + x_2 + x_3 + x_4 + x_5 = 20. \]
+Esto es equivalente a distribuir 20 objetos idénticos en 5 grupos. El número de formas de hacerlo es dado por:
+\[ \binom{20+5-1}{5-1} = \binom{24}{4}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+En una empresa hay 5 proyectos idénticos que deben asignarse a 3 empleados. Cada proyecto debe ser asignado a un empleado, pero un empleado puede tener asignados más de un proyecto o ninguno. ¿De cuántas maneras diferentes se pueden asignar los proyectos a los empleados?
+\begin{hint}
+Cada proyecto puede ser asignado a uno de los tres empleados, similar a colocar bolas en urnas.
+\begin{proof}
+El problema es equivalente a encontrar el número de soluciones enteras no negativas de la ecuación:
+\[ x_1 + x_2 + x_3 = 5. \]
+Donde \(x_1\), \(x_2\), y \(x_3\) representan el número de proyectos asignados a cada empleado. Utilizando la técnica de separadores:
+\[ \binom{5+3-1}{3-1} = \binom{7}{2}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Hay 10 cajas y 30 bolas, de las cuales 10 son verdes, 10 son azules y 10 son rojas. Las bolas del mismo color son indistinguibles. ¿De cuántas formas diferentes podemos distribuir las 30 bolas en las 10 cajas?
+\begin{hint}
+Considera que las bolas de cada color deben ser distribuidas por separado, usando la técnica de separadores para cada color.
+\begin{proof}
+Para cada color, necesitamos resolver el problema de distribuir 10 bolas idénticas en 10 cajas. El número de formas de hacerlo para un solo color es:
+\[ \binom{10+10-1}{10-1} = \binom{19}{9}. \]
+Dado que hay 3 colores diferentes, y cada color se distribuye independientemente, el número total de distribuciones es:
+\[ \binom{19}{9}^3. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+De cuántas formas puedes repartir 10 caramelos idénticos entre 4 niños si cada niño debe recibir al menos un caramelo.
+\begin{hint}
+Resta un caramelo a cada niño primero, luego aplica la técnica de separadores al resto.
+\begin{proof}
+Si cada niño debe recibir al menos un caramelo, primero asignamos un caramelo a cada niño. Esto deja \(10 - 4 = 6\) caramelos por repartir sin restricciones entre los 4 niños. Ahora, el problema es encontrar el número de soluciones enteras no negativas de:
+\[ y_1 + y_2 + y_3 + y_4 = 6. \]
+donde \(y_i = x_i - 1\) y cada \(y_i \geq 0\). El número de soluciones es:
+\[ \binom{6+4-1}{4-1} = \binom{9}{3}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Encuentra el número de formas en que se puede escribir el número 15 como la suma de 5 enteros no negativos.
+\begin{hint}
+Este es un problema directo de aplicación de la técnica de separadores.
+\begin{proof}
+El problema se reduce a encontrar el número de soluciones enteras no negativas para:
+\[ x_1 + x_2 + x_3 + x_4 + x_5 = 15. \]
+El número de soluciones está dado por:
+\[ \binom{15+5-1}{5-1} = \binom{19}{4}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Tienes 12 libros idénticos que deben ser distribuidos en 6 estantes. ¿De cuántas maneras diferentes se pueden distribuir los libros si no hay restricciones?
+\begin{hint}
+Piensa en los libros como objetos y los estantes como los grupos en los que se distribuyen.
+\begin{proof}
+El problema es equivalente a encontrar el número de soluciones enteras no negativas de:
+\[ x_1 + x_2 + x_3 + x_4 + x_5 + x_6 = 12. \]
+El número de formas de hacerlo es:
+\[ \binom{12+6-1}{6-1} = \binom{17}{5}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+De cuántas formas diferentes se pueden distribuir 12 libros idénticos en 6 estantes si cada estante debe recibir al menos un libro.
+\begin{hint}
+Resta un libro a cada estante primero, luego aplica la técnica de separadores al resto.
+\begin{proof}
+Si cada estante debe recibir al menos un libro, primero asignamos un libro a cada estante, dejando \(12 - 6 = 6\) libros por repartir. Ahora el problema se reduce a encontrar el número de soluciones enteras no negativas de:
+\[ y_1 + y_2 + y_3 + y_4 + y_5 + y_6 = 6, \]
+donde \(y_i = x_i - 1\) y cada \(y_i \geq 0\). El número de formas de hacerlo es:
+\[ \binom{6+6-1}{6-1} = \binom{11}{5}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Tienes 15 frutas (manzanas, naranjas y peras) y quieres repartirlas entre 3 cestas. ¿De cuántas maneras diferentes se pueden repartir las frutas si no hay restricciones?
+\begin{hint}
+Este es un problema de distribución con frutas como objetos y cestas como grupos.
+\begin{proof}
+El problema se puede dividir en tres subproblemas, uno para cada tipo de fruta. Para cada fruta, queremos encontrar el número de soluciones enteras no negativas para:
+\[ x_1 + x_2 + x_3 = 15. \]
+El número de formas de hacerlo es:
+\[ \binom{15+3-1}{3-1} = \binom{17}{2}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+De cuántas formas diferentes se pueden repartir 15 frutas (manzanas, naranjas y peras) entre 3 cestas si cada cesta debe recibir al menos una fruta.
+\begin{hint}
+Resta una fruta de cada tipo a cada cesta primero, luego aplica la técnica de separadores al resto.
+\begin{proof}
+Si cada cesta debe recibir al menos una fruta, primero asignamos una fruta de cada tipo a cada cesta, dejando \(15 - 3 = 12\) frutas por repartir. Ahora el problema se reduce a encontrar el número de soluciones enteras no negativas de:
+\[ y_1 + y_2 + y_3 = 12, \]
+donde \(y_i = x_i - 1\) y cada \(y_i \geq 0\). El número de formas de hacerlo es:
+\[ \binom{12+3-1}{3-1} = \binom{14}{2}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+En un concurso hay 8 premios idénticos para repartir entre 3 ganadores. ¿De cuántas maneras diferentes se pueden repartir los premios si no hay restricciones?
+\begin{hint}
+Piensa en los premios como objetos y los ganadores como los grupos en los que se distribuyen.
+\begin{proof}
+El problema es equivalente a encontrar el número de soluciones enteras no negativas de:
+\[ x_1 + x_2 + x_3 = 8. \]
+El número de formas de hacerlo es:
+\[ \binom{8+3-1}{3-1} = \binom{10}{2}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+De cuántas formas diferentes se pueden repartir 8 premios idénticos entre 3 ganadores si cada ganador debe recibir al menos un premio.
+\begin{hint}
+Resta un premio a cada ganador primero, luego aplica la técnica de separadores al resto.
+\begin{proof}
+Si cada ganador debe recibir al menos un premio, primero asignamos un premio a cada ganador, dejando \(8 - 3 = 5\) premios por repartir. Ahora el problema se reduce a encontrar el número de soluciones enteras no negativas de:
+\[ y_1 + y_2 + y_3 = 5, \]
+donde \(y_i = x_i - 1\) y cada \(y_i \geq 0\). El número de formas de hacerlo es:
+\[ \binom{5+3-1}{3-1} = \binom{7}{2}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Tienes 10 monedas idénticas y 4 alcancías. ¿De cuántas maneras diferentes se pueden distribuir las monedas entre las alcancías si no hay restricciones?
+\begin{hint}
+Piensa en las monedas como objetos y las alcancías como los grupos en los que se distribuyen.
+\begin{proof}
+El problema es equivalente a encontrar el número de soluciones enteras no negativas de:
+\[ x_1 + x_2 + x_3 + x_4 = 10. \]
+El número de formas de hacerlo es:
+\[ \binom{10+4-1}{4-1} = \binom{13}{3}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+De cuántas formas diferentes se pueden distribuir 10 monedas idénticas entre 4 alcancías si cada alcancía debe recibir al menos una moneda.
+\begin{hint}
+Resta una moneda a cada alcancía primero, luego aplica la técnica de separadores al resto.
+\begin{proof}
+Si cada alcancía debe recibir al menos una moneda, primero asignamos una moneda a cada alcancía, dejando \(10 - 4 = 6\) monedas por repartir. Ahora el problema se reduce a encontrar el número de soluciones enteras no negativas de:
+\[ y_1 + y_2 + y_3 + y_4 = 6, \]
+donde \(y_i = x_i - 1\) y cada \(y_i \geq 0\). El número de formas de hacerlo es:
+\[ \binom{6+4-1}{4-1} = \binom{9}{3}. \]
+\end{proof}
+\end{hint}
+\end{problem}
+
+\Closesolutionfile{all-hints}
+\Closesolutionfile{all-solution}
+
+\section{Sugerencias y Soluciones}
+\begin{enumerate}
+\input{all-hints.out}
+\end{enumerate}
+
+\end{document}
