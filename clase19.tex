@@ -1,0 +1,1201 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\graphicspath{ {./images/} }
+
+\usepackage{answers}
+\Newassociation{hint}{hintitem}{all-hints}
+\Newassociation{solu}{solutionitem}{all-solutions}
+\renewcommand{\solutionextension}{out}
+\renewenvironment{hintitem}[1]{\item[\bfseries #1.]}{}
+\renewenvironment{solutionitem}[1]{\item[\bfseries #1.]}{}
+
+\usepackage{venndiagram,multicol,hyperref,graphicx,array,xskak}
+\usepackage{tikz}
+\usetikzlibrary{positioning,trees}
+
+\begin{document}
+\title{Problemas importantes de Combi}
+\author{Ricardo Largaespada}
+\date{12 Octubre 2024}
+
+\maketitle
+
+\section{Problemas Propuestos}
+
+\Opensolutionfile{all-hints}
+\Opensolutionfile{all-solutions}
+
+\begin{problem}
+Demuestra que $\sum_{k=0}^n \binom{n}{k}^2=\binom{2n}{n}.$
+\begin{hint}
+Intenta interpretar ambos lados de la identidad combinatoriamente. Considera contar de dos maneras el número de formas de elegir $n$ elementos de un conjunto de $2n$ elementos.
+\begin{solu}
+Consideremos un conjunto $C$ con $2n$ elementos. Queremos contar el número de formas de elegir $n$ elementos de $C$, lo cual es $\binom{2n}{n}$.
+
+Ahora, supongamos que dividimos $C$ en dos subconjuntos disjuntos $A$ y $B$, cada uno con $n$ elementos ($|A| = |B| = n$ y $A \cup B = C$). Cualquier subconjunto de $n$ elementos de $C$ se puede formar eligiendo $k$ elementos de $A$ y $n - k$ elementos de $B$, donde $k$ varía de $0$ a $n$.
+
+El número de formas de elegir $k$ elementos de $A$ es $\binom{n}{k}$, y el número de formas de elegir $n - k$ elementos de $B$ es $\binom{n}{n - k} = \binom{n}{k}$ (porque $\binom{n}{n - k} = \binom{n}{k}$).
+
+Por lo tanto, el número total de formas de elegir $n$ elementos de $C$ es:
+
+$$
+\sum_{k=0}^n \binom{n}{k} \binom{n}{n - k} = \sum_{k=0}^n \binom{n}{k}^2.
+$$
+
+Pero sabemos que este número también es $\binom{2n}{n}$. Por lo tanto,
+
+$$
+\sum_{k=0}^n \binom{n}{k}^2 = \binom{2n}{n}.
+$$
+
+\end{solu}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+¿De cuántas maneras puedes sumar a $n$ con enteros positivos (el orden importa)?
+\begin{hint}
+Piensa en las composiciones de $n$. Cada suma de enteros positivos cuyo orden importa corresponde a una manera distinta de colocar separadores entre los sumandos. ¿Cuántas posiciones hay para colocar estos separadores?
+
+\begin{solu}
+
+Queremos encontrar el número de formas de escribir $n$ como suma de enteros positivos donde el orden importa. Estas se conocen como composiciones de $n$.
+
+Para visualizar esto, consideremos que cada entero positivo en la suma representa al menos un objeto (por ejemplo, una unidad). Entonces, podemos representar $n$ como una secuencia de $n$ unos:
+
+$$
+\underbrace{1\ 1\ 1\ \dots\ 1}_{n\ \text{veces}}
+$$
+
+Entre estos $n$ unos, hay $n - 1$ espacios donde podemos o no colocar un separador para formar sumandos. Cada espacio tiene dos opciones:
+
+1. Colocar un separador (lo que indica que termina un sumando y comienza otro).
+2. No colocar un separador (lo que significa que los unos adyacentes pertenecen al mismo sumando).
+
+Como hay $n - 1$ espacios y cada uno tiene 2 opciones, el número total de formas de colocar los separadores es:
+
+$$
+2^{n - 1}
+$$
+
+Por lo tanto, el número de composiciones de $n$ en enteros positivos es $2^{n - 1}$.
+
+Ejemplo para $n = 3$:
+
+Hay $2^{3 - 1} = 4$ composiciones:
+
+1. $3$ (no se colocan separadores): $1 + 1 + 1 = 3$
+2. $2 + 1$ (se coloca un separador después del primer uno): $(1 + 1) + 1 = 3$
+3. $1 + 2$ (se coloca un separador después del segundo uno): $1 + (1 + 1) = 3$
+4. $1 + 1 + 1$ (se colocan separadores en ambos espacios)
+
+\end{solu}
+\end{hint}
+
+\end{problem}
+
+\begin{problem}
+En un torneo de tenis juegan todos contra todos exactamente una vez. (En cada partido hay un ganador). Demuestra que hay una manera de enlistar los $n$ jugadores en orden de tal manera que cada jugador le ganó al siguiente en la lista.
+
+\begin{hint}
+Para resolver este problema, representa los resultados del torneo mediante un grafo orientado completo, conocido como un \textit{torneo} en teoría de grafos, donde cada jugador es un vértice y cada partido es una arista dirigida desde el ganador al perdedor.
+
+\begin{solu}
+En teoría de grafos, un \textbf{torneo} es un grafo orientado completo en el que, para cada par de vértices, existe exactamente una arista dirigida que conecta ambos vértices. Una propiedad fundamental de los torneos es que siempre contienen al menos un \textbf{camino hamiltoniano dirigido}, es decir, una secuencia de vértices en la que cada uno tiene una arista dirigida al siguiente y que pasa por todos los vértices exactamente una vez.
+
+El \textbf{Teorema de Rédei} establece que todo torneo tiene un camino hamiltoniano dirigido.
+
+\begin{proof}
+Procedemos por inducción sobre el número de jugadores $n$.
+
+- \textbf{Caso base ($n = 1$):} Con un solo jugador, trivialmente existe un camino hamiltoniano (el jugador mismo).
+
+- \textbf{Hipótesis inductiva:} Supongamos que para un torneo con $n - 1$ jugadores existe un camino hamiltoniano dirigido.
+
+- \textbf{Paso inductivo:} Consideremos un torneo con $n$ jugadores. Tomemos un jugador arbitrario $v$ y consideremos el subtorneo formado por los $n - 1$ jugadores restantes. Por hipótesis inductiva, existe un camino hamiltoniano dirigido en este subtorneo.
+
+Denotemos este camino como $v_1 \rightarrow v_2 \rightarrow \dots \rightarrow v_{n-1}$.
+
+Ahora, insertaremos al jugador $v$ en alguna posición del camino para formar un camino hamiltoniano en el torneo completo:
+
+1. Recorremos el camino y encontramos el lugar adecuado para insertar $v$:
+   - Si $v$ le ganó a $v_1$, colocamos $v$ al inicio del camino.
+   - Si $v_{n-1}$ le ganó a $v$, colocamos $v$ al final del camino.
+   - De lo contrario, existe un $i$ tal que $v_i$ le ganó a $v$ y $v$ le ganó a $v_{i+1}$. Insertamos $v$ entre $v_i$ y $v_{i+1}$.
+
+2. De esta manera, obtenemos un nuevo camino hamiltoniano dirigido:
+   $$
+   v_1 \rightarrow \dots \rightarrow v_i \rightarrow v \rightarrow v_{i+1} \rightarrow \dots \rightarrow v_{n-1}
+   $$
+
+Esto es posible porque, en un torneo, para cada par de jugadores existe un resultado definido (alguien le gana al otro).
+
+Por lo tanto, por inducción, todo torneo tiene un camino hamiltoniano dirigido.
+
+\end{proof}
+
+\textbf{Solución:}
+
+Representamos el torneo como un grafo orientado completo (un \textit{torneo} en términos de teoría de grafos), donde cada vértice representa a un jugador y cada arista dirigida representa el resultado de un partido (una arista de $A$ a $B$ indica que $A$ le ganó a $B$).
+
+Por el \textbf{Teorema de Rédei}, sabemos que todo torneo contiene al menos un camino hamiltoniano dirigido. Es decir, existe una secuencia de jugadores $v_1, v_2, \dots, v_n$ tal que cada jugador $v_i$ le ganó al siguiente jugador $v_{i+1}$ en la secuencia, para $1 \leq i < n$.
+
+Esta secuencia es precisamente el orden requerido en el problema: una lista de los $n$ jugadores donde cada uno le ganó al siguiente en la lista.
+
+Por lo tanto, siempre es posible encontrar tal ordenación de jugadores en cualquier torneo donde todos juegan contra todos exactamente una vez y no hay empates.
+\end{solu}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+¿Cuántos subconjuntos de $\{1, 2, \dots, 20\}$ no tienen elementos consecutivos?
+
+\begin{hint}
+Para resolver este problema, piensa en términos de combinatoria. Si seleccionamos elementos sin que sean consecutivos, necesitamos dejar al menos un número sin seleccionar entre cada par de números seleccionados. Esto se asemeja al problema de colocar objetos (los elementos seleccionados) en espacios disponibles, asegurando que no estén juntos.
+
+\begin{solu}
+\textbf{Solución:}
+
+Queremos contar el número de subconjuntos de $\{1, 2, \dots, 20\}$ que no contienen elementos consecutivos. Es decir, ningún par de elementos en el subconjunto es consecutivo.
+
+Supongamos que queremos seleccionar $k$ elementos de $\{1, 2, \dots, 20\}$ sin que sean consecutivos. Para ello, necesitamos asegurar que haya al menos un número sin seleccionar entre cada par de números seleccionados.
+
+Podemos modelar esto de la siguiente manera:
+
+1. Representación visual:
+
+   Imaginemos $20$ posiciones en fila, representando los números del $1$ al $20$:
+
+   $$
+   \underbrace{\square\ \square\ \square\ \dots\ \square}_{20\ \text{casillas}}
+   $$
+
+2. Colocación de elementos seleccionados:
+
+   Queremos colocar $k$ elementos seleccionados en estas $20$ posiciones, de modo que no estén en posiciones consecutivas. Para garantizar esto, dejamos al menos una casilla vacía entre cada elemento seleccionado.
+
+3. Modelado del problema:
+
+   - Primero, colocamos $k$ elementos seleccionados. Cada uno ocupa una casilla.
+   - Para evitar que estén juntos, asignamos $k - 1$ ``espacios obligatorios'' entre ellos, que deben ser ocupados por al menos una casilla vacía.
+   - Esto nos deja $20 - k$ casillas para distribuir en los espacios entre los elementos seleccionados y a los lados.
+
+4. Equivalencia con el problema de barras y estrellas:
+
+   - Tenemos $n' = 20 - k + 1$ ``espacios'' donde podemos colocar los $k$ elementos seleccionados.
+   - El número de formas de colocar los $k$ elementos en estos $n'$ espacios es $\binom{n'}{k} = \binom{21 - k}{k}$.
+
+5. Cálculo total:
+
+   El número de formas de seleccionar $k$ elementos sin consecutivos es $\binom{21 - k}{k}$.
+
+   El número total de subconjuntos sin elementos consecutivos es la suma para $k$ desde $0$ hasta $10$ (porque no podemos seleccionar más de $10$ elementos sin que sean consecutivos) de $\binom{21 - k}{k}$:
+
+   $$
+   \sum_{k=0}^{10} \binom{21 - k}{k}
+   $$
+
+Cálculo detallado:
+
+Calculamos cada término de la suma:
+
+- Para $k = 0$:
+  $$
+  \binom{21}{0} = 1
+  $$
+
+- Para $k = 1$:
+  $$
+  \binom{20}{1} = 20
+  $$
+
+- Para $k = 2$:
+  $$
+  \binom{19}{2} = \frac{19 \times 18}{2} = 171
+  $$
+
+- Para $k = 3$:
+  $$
+  \binom{18}{3} = \frac{18 \times 17 \times 16}{6} = 816
+  $$
+
+- Para $k = 4$:
+  $$
+  \binom{17}{4} = \frac{17 \times 16 \times 15 \times 14}{24} = 2380
+  $$
+
+- Para $k = 5$:
+  $$
+  \binom{16}{5} = \frac{16 \times 15 \times 14 \times 13 \times 12}{120} = 4368
+  $$
+
+- Para $k = 6$:
+  $$
+  \binom{15}{6} = \frac{15 \times 14 \times 13 \times 12 \times 11 \times 10}{720} = 5005
+  $$
+
+- Para $k = 7$:
+  $$
+  \binom{14}{7} = \frac{14 \times 13 \times 12 \times 11 \times 10 \times 9 \times 8}{5040} = 3432
+  $$
+
+- Para $k = 8$:
+  $$
+  \binom{13}{8} = \binom{13}{5} = \frac{13 \times 12 \times 11 \times 10 \times 9}{120} = 1287
+  $$
+
+- Para $k = 9$:
+  $$
+  \binom{12}{9} = \binom{12}{3} = \frac{12 \times 11 \times 10}{6} = 220
+  $$
+
+- Para $k = 10$:
+  $$
+  \binom{11}{10} = 11
+  $$
+
+Sumamos todos los valores:
+
+\begin{align*}
+\text{Total} &= \binom{21}{0} + \binom{20}{1} + \binom{19}{2} + \binom{18}{3} + \binom{17}{4} + \binom{16}{5} + \binom{15}{6} + \binom{14}{7} + \binom{13}{8} + \binom{12}{9} + \binom{11}{10} \\
+&= 1 + 20 + 171 + 816 + 2380 + 4368 + 5005 + 3432 + 1287 + 220 + 11 \\
+&= 17,\!711
+\end{align*}
+
+Por lo tanto, hay 17,711 subconjuntos de $\{1, 2, \dots, 20\}$ que no contienen elementos consecutivos.
+\end{solu}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Un rey de ajedrez empieza en la esquina superior izquierda de un tablero de $m \times n$. José y Nico mueven el rey alternadamente, pero el rey no puede regresar a una casilla que ya ocupó. Pierde el primero que no pueda mover. Determina para cada pareja $(m, n)$ quién gana.
+
+\begin{hint}
+Observa que el número total de casillas en el tablero es $m \times n$, y que cada movimiento ocupa una casilla nueva sin repetir. Considera cómo la paridad (si es par o impar) del número total de casillas afecta quién será el último en mover. Piensa en términos de quién tiene ventaja dependiendo de si el número total de casillas es par o impar.
+
+\begin{solu}
+\textbf{Solución:}
+
+El juego consiste en que José y Nico mueven el rey alternadamente, sin regresar a casillas ya visitadas. El rey comienza en la casilla $(1,1)$, que ya está ocupada desde el inicio. Cada movimiento del rey es a una casilla adyacente no visitada. 
+
+El número total de movimientos posibles es:
+
+$$
+\text{Número total de movimientos} = m \times n - 1,
+$$
+
+ya que la casilla inicial ya está ocupada.
+
+**Análisis:**
+
+- Si el número total de movimientos, $m \times n - 1$, es \textbf{par}, entonces habrá un número par de movimientos disponibles.
+  - José (primer jugador) hace el primer movimiento.
+  - Nico (segundo jugador) hará el último movimiento.
+  - Después del último movimiento de Nico, José no tendrá movimientos disponibles y perderá.
+  - Por lo tanto, \textbf{Nico gana} cuando $m \times n - 1$ es par, es decir, cuando $m \times n$ es \textbf{impar}.
+
+- Si el número total de movimientos, $m \times n - 1$, es \textbf{impar}, entonces habrá un número impar de movimientos disponibles.
+  - José hace el primer movimiento y también hará el último movimiento.
+  - Después del último movimiento de José, Nico no tendrá movimientos disponibles y perderá.
+  - Por lo tanto, \textbf{José gana} cuando $m \times n - 1$ es impar, es decir, cuando $m \times n$ es \textbf{par}.
+
+**Conclusión:**
+
+- Si $m \times n$ es \textbf{par}, \textbf{José gana}.
+- Si $m \times n$ es \textbf{impar}, \textbf{Nico gana}.
+
+**Ejemplos:**
+
+1. **Tablero $3 \times 3$:**
+   - $m \times n = 3 \times 3 = 9$ (impar).
+   - Número total de movimientos: $9 - 1 = 8$ (par).
+   - Nico gana.
+
+2. **Tablero $4 \times 5$:**
+   - $m \times n = 4 \times 5 = 20$ (par).
+   - Número total de movimientos: $20 - 1 = 19$ (impar).
+   - José gana.
+
+3. **Tablero $2 \times 2$:**
+   - $m \times n = 2 \times 2 = 4$ (par).
+   - Número total de movimientos: $4 - 1 = 3$ (impar).
+   - José gana.
+
+**Nota adicional:**
+
+Este resultado se debe a que en juegos donde ambos jugadores tienen las mismas opciones y no hay elementos de azar, la paridad del número total de movimientos puede determinar quién tiene una estrategia ganadora. En este caso, cuando el número total de casillas es par, José puede garantizar la victoria; cuando es impar, Nico tiene la ventaja.
+\end{solu}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Demuestra que en una fiesta hay dos personas que conocen a la misma cantidad de personas.
+
+\begin{hint}
+Considera las posibles cantidades de personas que alguien puede conocer en una fiesta con $n$ personas. Aplica el Principio del Palomar para demostrar que debe haber al menos dos personas con la misma cantidad de conocidos.
+
+\begin{solu}
+\textbf{Solución:}
+
+Supongamos que hay $n$ personas en la fiesta. Cada persona puede conocer a cualquier número de personas entre $0$ y $n - 1$ (ya que no puede conocerse a sí misma).
+
+Denotemos por $d_i$ el número de personas que la persona $i$ conoce, donde $0 \leq d_i \leq n - 1$.
+
+Sin embargo, hay una restricción importante:
+
+- **No pueden existir simultáneamente una persona que conozca a todos ($d_i = n - 1$) y una persona que no conozca a nadie ($d_j = 0$).**
+
+Esto es porque si alguien conoce a todos ($d_i = n - 1$), entonces esa persona conoce a todos los demás, incluyendo a la persona que supuestamente no conoce a nadie ($d_j = 0$), lo cual es una contradicción.
+
+Por lo tanto, los posibles valores para $d_i$ son:
+
+- O bien los números enteros de $0$ a $n - 2$, si nadie conoce a todos.
+- O bien los números enteros de $1$ a $n - 1$, si nadie está aislado.
+
+En ambos casos, hay **$n - 1$** posibles valores de $d_i$ para **$n$** personas.
+
+Aplicando el **Principio del Palomar** (Principio de Dirichlet):
+
+- Si tenemos $n$ personas (palomas) y $n - 1$ posibles grados de conocidos (palomares), entonces al menos dos personas deben tener el mismo número de conocidos.
+
+**Conclusión:**
+
+- En cualquier fiesta con $n$ personas, siempre habrá al menos dos personas que conocen exactamente al mismo número de personas.
+\end{solu}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Un rectángulo de lados enteros impares se divide en rectángulos de lados enteros. Demuestra que uno de esos rectángulos tiene todos sus lados impares.
+
+\begin{hint}
+Considera el área total del rectángulo y las áreas de los rectángulos más pequeños. Analiza la paridad (si son pares o impares) de las dimensiones y las áreas de los rectángulos involucrados. Recuerda que el producto de dos números enteros es impar solo si ambos son impares.
+
+\begin{solu}
+\textbf{Solución:}
+
+Sea el rectángulo original de dimensiones enteras impares $m$ y $n$, es decir, $m$ y $n$ son números impares positivos. Por lo tanto, el área total del rectángulo es:
+
+$$
+\text{Área total} = m \times n
+$$
+
+Como $m$ y $n$ son impares, su producto es impar, ya que:
+
+- El producto de dos números impares es impar.
+
+Ahora, el rectángulo se divide en varios rectángulos más pequeños, cada uno con lados de longitud entera positiva.
+
+Supongamos, por el contrario, que **ninguno** de los rectángulos pequeños tiene ambos lados impares. Es decir, en cada rectángulo pequeño, al menos uno de sus lados es par.
+
+Analicemos el área de cada rectángulo pequeño:
+
+- Si uno de los lados es par y el otro es cualquier entero (par o impar), entonces el área de ese rectángulo es par:
+  $$
+  \text{Área} = (\text{par}) \times (\text{entero}) = \text{par}
+  $$
+- Si ambos lados son pares, el área también es par:
+  $$
+  \text{Área} = (\text{par}) \times (\text{par}) = \text{par}
+  $$
+
+Por lo tanto, en todos los casos, el área de cada rectángulo pequeño es un número par.
+
+Ahora, al sumar las áreas de todos los rectángulos pequeños, obtenemos que la suma total de las áreas es par, ya que la suma de números pares es par.
+
+Sin embargo, esto contradice el hecho de que el área total del rectángulo original es impar. Es imposible que una suma de números pares dé como resultado un número impar.
+
+Esta contradicción implica que nuestra suposición inicial es falsa. Por lo tanto, debe existir al menos un rectángulo pequeño que tenga ambos lados impares. De esta manera, su área será impar, y la suma de las áreas podrá ser impar, como corresponde al área total del rectángulo original.
+
+**Conclusión:**
+
+En la partición del rectángulo original de lados impares, al menos uno de los rectángulos más pequeños debe tener ambos lados impares.
+\end{solu}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Una camioneta tiene 20 cubetas (indistinguibles). ¿De cuántas maneras es posible poner pintura roja, azul, y amarilla en las cubetas (un solo tipo por cubeta)?
+
+\begin{hint}
+Considera que las cubetas son indistinguibles, por lo que lo único que importa es cuántas cubetas hay de cada color. Esto se convierte en un problema de particiones enteras no negativas. Piensa en el número de soluciones enteras no negativas de la ecuación $r + a + y = 20$, donde $r$, $a$, $y$ representan el número de cubetas pintadas de rojo, azul y amarillo, respectivamente.
+
+\begin{solu}
+\textbf{Solución:}
+
+Dado que las cubetas son indistinguibles, nos interesa contar el número de maneras de asignar las 20 cubetas a tres colores diferentes: rojo ($r$), azul ($a$) y amarillo ($y$), sin importar el orden o la identidad de las cubetas.
+
+Estamos buscando el número de soluciones enteras no negativas al sistema:
+
+$$
+r + a + y = 20, \quad \text{donde} \quad r, a, y \geq 0.
+$$
+
+Este es un problema clásico de combinatoria que se resuelve utilizando el concepto de combinaciones con repetición.
+
+El número de soluciones enteras no negativas de esta ecuación es dado por la fórmula:
+
+$$
+\binom{n + k - 1}{k - 1},
+$$
+
+donde:
+
+- $n$ es el número total de objetos a distribuir (en este caso, $n = 20$ cubetas).
+- $k$ es el número de categorías o tipos diferentes (en este caso, $k = 3$ colores).
+
+Aplicando la fórmula:
+
+$$
+\binom{20 + 3 - 1}{3 - 1} = \binom{22}{2} = \frac{22 \times 21}{2} = 231.
+$$
+
+**Explicación detallada:**
+
+- Estamos colocando 20 objetos idénticos (cubetas indistinguibles) en 3 cajas (colores) distintas.
+- El número de formas de hacer esto es equivalente al número de combinaciones con repetición de $n$ elementos en $k$ categorías.
+- Visualmente, podemos pensar en 20 cubetas representadas por 20 bolas y necesitamos colocar 2 separadores para dividirlas en 3 grupos (colores). El número de formas de colocar estos separadores entre las bolas es $\binom{22}{2}$.
+
+**Respuesta:**
+
+Hay **231** maneras de poner pintura roja, azul y amarilla en las cubetas.
+\end{solu}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+¿Es posible cubrir un tablero de $10 \times 10$ con fichas de $1 \times 4$?
+
+\begin{hint}
+Considera utilizar una coloración del tablero que pueda ayudar a demostrar si es posible o no. Una forma común es asignar números a las casillas utilizando aritmética modular y analizar cómo las fichas cubren estas casillas coloreadas.
+
+\begin{solu}
+\textbf{Solución:}
+
+Para determinar si es posible cubrir un tablero de $10 \times 10$ con fichas de $1 \times 4$, analizaremos la situación mediante una coloración y un argumento basado en aritmética modular.
+
+**Paso 1: Cálculo del área total y número de fichas necesarias**
+
+- El tablero tiene un área total de $10 \times 10 = 100$ casillas.
+- Cada ficha de $1 \times 4$ cubre $1 \times 4 = 4$ casillas.
+- El número total de fichas necesarias es $\frac{100}{4} = 25$, que es un número entero.
+
+A primera vista, parece posible cubrir el tablero. Sin embargo, debemos analizar si es factible acomodar las fichas sin dejar espacios vacíos ni superponerlas.
+
+**Paso 2: Análisis mediante coloración modular**
+
+Asignaremos a cada casilla del tablero un número según la suma de sus coordenadas módulo 4. Es decir, para la casilla en la posición $(i, j)$, asignamos:
+
+$$
+s = (i + j) \mod 4
+$$
+
+Esto nos dará cuatro posibles valores para $s$: 0, 1, 2 y 3.
+
+**Propiedades clave:**
+
+- Una ficha de $1 \times 4$ colocada horizontalmente cubrirá casillas en posiciones $(i, j)$, $(i, j+1)$, $(i, j+2)$ y $(i, j+3)$.
+  - Los valores de $s$ para estas casillas serán $(i + j) \mod 4$, $(i + j + 1) \mod 4$, $(i + j + 2) \mod 4$, $(i + j + 3) \mod 4$.
+  - Estos valores de $s$ son consecutivos y cubrirán exactamente una casilla de cada uno de los cuatro posibles valores $0$, $1$, $2$, $3$ (aunque el orden puede variar).
+
+- Lo mismo ocurre para fichas colocadas verticalmente.
+
+**Paso 3: Contar el número de casillas de cada tipo**
+
+Ahora, contamos cuántas casillas hay de cada valor de $s$ en el tablero:
+
+1. **Determinamos la frecuencia de cada $i \mod 4$ y $j \mod 4$**
+
+   - Los valores posibles para $i$ y $j$ van de $0$ a $9$.
+   - Calculamos cuántas veces aparece cada residuo al dividir $i$ y $j$ entre 4:
+
+     - $i \mod 4 = 0$: cuando $i = 0, 4, 8$ (3 valores)
+     - $i \mod 4 = 1$: cuando $i = 1, 5, 9$ (3 valores)
+     - $i \mod 4 = 2$: cuando $i = 2, 6$ (2 valores)
+     - $i \mod 4 = 3$: cuando $i = 3, 7$ (2 valores)
+
+   - Lo mismo aplica para $j \mod 4$.
+
+2. **Calculamos la cantidad de casillas para cada valor de $s$**
+
+   - Usando las combinaciones de $i \mod 4$ y $j \mod 4$, y sabiendo que $s = (i + j) \mod 4$, determinamos cuántas casillas tienen cada valor de $s$.
+
+   - Después de realizar el conteo, obtenemos:
+
+     - **Casillas con $s = 0$**: 25 casillas
+     - **Casillas con $s = 1$**: 26 casillas
+     - **Casillas con $s = 2$**: 25 casillas
+     - **Casillas con $s = 3$**: 24 casillas
+
+**Paso 4: Análisis final**
+
+- Cada ficha de $1 \times 4$ cubre exactamente una casilla de cada uno de los valores de $s = 0$, $1$, $2$, $3$.
+- Para cubrir completamente el tablero sin superposiciones ni espacios vacíos, necesitamos que el número de casillas de cada tipo sea múltiplo de 25 (porque hay 25 fichas).
+- Sin embargo, tenemos:
+
+  - $s = 0$: 25 casillas
+  - $s = 1$: **26 casillas**
+  - $s = 2$: 25 casillas
+  - $s = 3$: **24 casillas**
+
+- Existe un desequilibrio en el número de casillas con $s = 1$ y $s = 3$.
+
+**Conclusión:**
+
+Debido a que las casillas no se distribuyen uniformemente entre los cuatro valores de $s$, no es posible cubrir el tablero completamente con fichas de $1 \times 4$. Siempre quedará al menos una casilla sin cubrir o habrá superposición de fichas.
+
+**Respuesta:**
+
+No, no es posible cubrir un tablero de $10 \times 10$ con fichas de $1 \times 4$.
+\end{solu}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Hay $n$ fichas en la mesa. Ana y Beto juegan alternadamente a quitar fichas empezando por Ana. En cada turno pueden quitar una cantidad de fichas del conjunto $\{ 1, 3, 8 \}$. Determina el ganador para cada valor de $n$. Intenta el mismo problema pero con el conjunto de los números no compuestos. ¿Puedes encontrar un algoritmo para resolver el problema con conjuntos más o menos pequeños?
+
+\begin{hint}
+Para resolver este tipo de problemas, es útil utilizar el concepto de \textit{estados ganadores} y \textit{estados perdedores}. Puedes construir una tabla para valores pequeños de $n$ y observar patrones. Considera también el uso de los \textit{números de Grundy} o \textit{nimbers} para determinar el estado de cada posición en el juego.
+
+\begin{solu}
+\textbf{Solución:}
+
+**Parte 1: Conjunto de movimientos $\{1, 3, 8\}$**
+
+Vamos a analizar quién gana para cada valor de $n$ cuando los jugadores pueden quitar 1, 3 o 8 fichas.
+
+**Definiciones:**
+
+- Un \textbf{estado ganador} es aquel en el que el jugador que tiene el turno puede forzar la victoria.
+- Un \textbf{estado perdedor} es aquel en el que, sin importar qué movimiento haga el jugador, el oponente puede forzar la victoria.
+
+**Paso 1: Construir una tabla de estados usando números de Grundy**
+
+Los \textbf{números de Grundy} se calculan usando la función $\text{mex}$ (mínimo excludente), que es el menor número natural que no está en un conjunto dado.
+
+Para cada valor de $n$, calculamos $G(n)$:
+
+$$
+G(n) = \text{mex}\{ G(n - s) \mid s \in S, \ n - s \geq 0 \}
+$$
+
+Donde $S = \{1, 3, 8\}$.
+
+**Cálculo de $G(n)$ para $n$ pequeño:**
+
+\begin{itemize}
+\item $G(0) = 0$ (estado terminal).
+\item Para $n = 1$:
+  \[
+  G(1) = \text{mex}\{ G(1 - 1) \} = \text{mex}\{ G(0) \} = \text{mex}\{ 0 \} = 1.
+  \]
+\item Para $n = 2$:
+  \[
+  G(2) = \text{mex}\{ G(2 - 1) \} = \text{mex}\{ G(1) \} = \text{mex}\{ 1 \} = 0.
+  \]
+\item Para $n = 3$:
+  \[
+  G(3) = \text{mex}\{ G(2),\ G(0) \} = \text{mex}\{ 0,\ 0 \} = 1.
+  \]
+\item Para $n = 4$:
+  \[
+  G(4) = \text{mex}\{ G(3),\ G(1) \} = \text{mex}\{ 1,\ 1 \} = 0.
+  \]
+\item Para $n = 5$:
+  \[
+  G(5) = \text{mex}\{ G(4),\ G(2) \} = \text{mex}\{ 0,\ 0 \} = 1.
+  \]
+\item Para $n = 6$:
+  \[
+  G(6) = \text{mex}\{ G(5),\ G(3) \} = \text{mex}\{ 1,\ 1 \} = 0.
+  \]
+\item Para $n = 7$:
+  \[
+  G(7) = \text{mex}\{ G(6),\ G(4) \} = \text{mex}\{ 0,\ 0 \} = 1.
+  \]
+\item Para $n = 8$:
+  \[
+  G(8) = \text{mex}\{ G(7),\ G(5),\ G(0) \} = \text{mex}\{ 1,\ 1,\ 0 \} = 2.
+  \]
+\item Para $n = 9$:
+  \[
+  G(9) = \text{mex}\{ G(8),\ G(6),\ G(1) \} = \text{mex}\{ 2,\ 0,\ 1 \} = 3.
+  \]
+\item Para $n = 10$:
+  \[
+  G(10) = \text{mex}\{ G(9),\ G(7),\ G(2) \} = \text{mex}\{ 3,\ 1,\ 0 \} = 2.
+  \]
+\item Para $n = 11$:
+  \[
+  G(11) = \text{mex}\{ G(10),\ G(8),\ G(3) \} = \text{mex}\{ 2,\ 2,\ 1 \} = 0.
+  \]
+\item Para $n = 12$:
+  \[
+  G(12) = \text{mex}\{ G(11),\ G(9),\ G(4) \} = \text{mex}\{ 0,\ 3,\ 0 \} = 1.
+  \]
+\item Para $n = 13$:
+  \[
+  G(13) = \text{mex}\{ G(12),\ G(10),\ G(5) \} = \text{mex}\{ 1,\ 2,\ 1 \} = 0.
+  \]
+\item Para $n = 14$:
+  \[
+  G(14) = \text{mex}\{ G(13),\ G(11),\ G(6) \} = \text{mex}\{ 0,\ 0,\ 0 \} = 1.
+  \]
+\item Para $n = 15$:
+  \[
+  G(15) = \text{mex}\{ G(14),\ G(12),\ G(7) \} = \text{mex}\{ 1,\ 1,\ 1 \} = 0.
+  \]
+\item Para $n = 16$:
+  \[
+  G(16) = \text{mex}\{ G(15),\ G(13),\ G(8) \} = \text{mex}\{ 0,\ 0,\ 2 \} = 1.
+  \]
+\item Para $n = 17$:
+  \[
+  G(17) = \text{mex}\{ G(16),\ G(14),\ G(9) \} = \text{mex}\{ 1,\ 1,\ 3 \} = 0.
+  \]
+\item Para $n = 18$:
+  \[
+  G(18) = \text{mex}\{ G(17),\ G(15),\ G(10) \} = \text{mex}\{ 0,\ 0,\ 2 \} = 1.
+  \]
+\item Para $n = 19$:
+  \[
+  G(19) = \text{mex}\{ G(18),\ G(16),\ G(11) \} = \text{mex}\{ 1,\ 1,\ 0 \} = 2.
+  \]
+\item Para $n = 20$:
+  \[
+  G(20) = \text{mex}\{ G(19),\ G(17),\ G(12) \} = \text{mex}\{ 2,\ 0,\ 1 \} = 3.
+  \]
+\end{itemize}
+
+**Observaciones:**
+
+- Los números de Grundy siguen un patrón cíclico cada 7 números:
+  - $G(n) = 1$ cuando $n \mod 7 \in \{1, 4\}$
+  - $G(n) = 0$ cuando $n \mod 7 \in \{2, 5\}$
+  - $G(n) = 2$ cuando $n \mod 7 \in \{8, 19\}$ (no aplica aquí, pero observamos que $G(8) = 2$, $G(19) = 2$)
+  - Sin embargo, el ciclo no es perfectamente regular.
+
+**Simplificación:**
+
+Aunque el patrón no es perfectamente cíclico, notamos que:
+
+- Para $n$ múltiplo de 3 ($n \mod 3 = 0$), el número de Grundy tiende a ser $0$.
+- No obstante, esta observación no es suficiente para determinar un patrón general.
+
+**Conclusión para $\{1, 3, 8\}$:**
+
+Debido a la complejidad y falta de un patrón claro, podemos considerar que:
+
+- Si $G(n) = 0$, el jugador que tiene el turno está en un estado perdedor.
+- Si $G(n) \neq 0$, el jugador tiene una estrategia ganadora.
+
+Por lo tanto, para valores específicos de $n$, podemos determinar quién gana calculando $G(n)$.
+
+**Parte 2: Conjunto de movimientos de los números no compuestos**
+
+Los números no compuestos son los números \textbf{primos} y el número $1$. Es decir, $S = \{1, 2, 3, 5, 7, 11, 13, 17, 19, \dots\}$.
+
+**Análisis:**
+
+- Este conjunto es infinito y contiene todos los números primos y el $1$.
+- En cada turno, un jugador puede quitar un número de fichas igual a un número primo o $1$.
+- Esto significa que los posibles movimientos son quitar $1$, $2$, $3$, $5$, $7$, $11$, $13$, $17$, $19$, etc., fichas.
+
+**Estrategia para resolver el problema:**
+
+1. **Calcular los números de Grundy para valores de $n$ pequeños:**
+
+   - Como el conjunto de movimientos es más amplio, el cálculo manual se vuelve impráctico.
+   - Podemos implementar un algoritmo de programación dinámica para calcular $G(n)$ hasta un valor deseado de $n$.
+
+2. **Implementar un algoritmo:**
+
+   - Crear un arreglo $G[0 \ldots n_{\text{máx}}]$ donde $G[0] = 0$.
+   - Para cada $n$ desde $1$ hasta $n_{\text{máx}}$:
+     \[
+     G[n] = \text{mex}\{ G[n - s] \mid s \in S,\ n - s \geq 0 \}
+     \]
+   - El conjunto $S$ incluye todos los números primos y el $1$ menores o iguales a $n$.
+
+3. **Encontrar patrones:**
+
+   - Después de calcular $G(n)$ para varios valores de $n$, podemos buscar patrones o ciclos que nos ayuden a determinar una fórmula general.
+   - Sin embargo, debido a la naturaleza de los números primos, es probable que no exista un patrón cíclico simple.
+
+**Conclusión para el conjunto de números no compuestos:**
+
+- Sin un patrón claro, lo más práctico es utilizar programación dinámica para calcular $G(n)$ para el valor específico de $n$ en cuestión.
+- El jugador que comienza en un estado con $G(n) = 0$ está en un estado perdedor.
+- El jugador que comienza en un estado con $G(n) \neq 0$ tiene una estrategia ganadora.
+
+**Algoritmo general para conjuntos pequeños:**
+
+- Independientemente del conjunto $S$, podemos utilizar el siguiente algoritmo:
+
+  1. Inicializar $G[0] = 0$.
+  2. Para cada $n$ desde $1$ hasta $n_{\text{máx}}$:
+     - Calcular $G[n] = \text{mex}\{ G[n - s] \mid s \in S,\ n - s \geq 0 \}$.
+  3. Determinar el ganador para $n$ observando si $G[n]$ es cero (estado perdedor) o no (estado ganador).
+
+**Ejemplo con un conjunto pequeño $S = \{1, 2\}$:**
+
+- Este es el clásico juego de Nim con pilas de tamaño $n$ y movimientos de quitar $1$ o $2$ fichas.
+- Los números de Grundy se alternan entre $G(n) = 1$ y $G(n) = 0$.
+- Patrón: $G(n) = n \mod 3$.
+
+**Conclusión final:**
+
+- Para conjuntos pequeños y específicos, podemos encontrar patrones en los números de Grundy.
+- Para conjuntos más grandes o con números sin patrón evidente (como los números primos), es recomendable usar programación dinámica para calcular los estados y determinar el ganador.
+- El concepto de números de Grundy es una herramienta poderosa para analizar estos juegos y diseñar algoritmos que determinen la estrategia óptima.
+\end{solu}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+En una tira de dígitos $201920192019 \cdots 2019$ con 2019 $2019$'s, ¿de cuántas maneras se puede elegir un $2$, un $0$, un $1$, un $9$ que aparezcan en ese orden?
+
+\begin{hint}
+Observa que la secuencia consiste en repetir el número $2019$ un total de 2019 veces. Cada dígito $2$, $0$, $1$, $9$ se repite periódicamente cada 4 posiciones. Intenta modelar el problema contando las posiciones de los dígitos y aplicando combinatoria de conteo con reemplazo para determinar el número total de formas de seleccionar los dígitos en orden.
+\end{hint}
+
+\begin{solu}
+**Solución:**
+
+La secuencia está formada por 2019 repeticiones del número $2019$. Cada $2019$ aporta 4 dígitos a la secuencia, por lo que la longitud total de la tira es:
+
+$$
+\text{Longitud total} = 2019 \times 4 = 8076\ \text{dígitos}.
+$$
+
+Los dígitos en la secuencia se repiten en el siguiente patrón cada 4 posiciones:
+
+1. Posición $4k + 1$: dígito $2$.
+2. Posición $4k + 2$: dígito $0$.
+3. Posición $4k + 3$: dígito $1$.
+4. Posición $4k + 4$: dígito $9$.
+
+donde $k$ varía de $0$ a $2018$ (ya que hay 2019 grupos de 4 dígitos).
+
+Por lo tanto, hay 2019 ocurrencias de cada dígito $2$, $0$, $1$ y $9$ en posiciones específicas.
+
+Nuestro objetivo es contar el número de formas de elegir un $2$, un $0$, un $1$, un $9$ que aparezcan en ese orden, es decir, necesitamos contar el número de cuádruplas de posiciones $(i, j, k, l)$ tales que:
+
+- $i < j < k < l$,
+- el dígito en la posición $i$ es $2$,
+- el dígito en la posición $j$ es $0$,
+- el dígito en la posición $k$ es $1$,
+- el dígito en la posición $l$ es $9$.
+
+**Análisis de posiciones:**
+
+Las posiciones de cada dígito son:
+
+- Dígitos $2$: posiciones $4k + 1$.
+- Dígitos $0$: posiciones $4k + 2$.
+- Dígitos $1$: posiciones $4k + 3$.
+- Dígitos $9$: posiciones $4k + 4$.
+
+donde $k = 0, 1, 2, \dots, 2018$.
+
+**Observación clave:**
+
+Aunque los índices $i$, $j$, $k$, $l$ representan posiciones específicas, las diferencias entre ellos siempre son al menos 1 debido a que las posiciones de los dígitos son consecutivas en cada grupo de $2019$.
+
+Sin embargo, necesitamos asegurarnos de que $i \leq j \leq k \leq l$, y que las posiciones correspondientes estén en orden creciente.
+
+**Simplificación del problema:**
+
+Notamos que incluso si seleccionamos el mismo grupo de $2019$ (mismo valor de $k$), las posiciones de los dígitos $2$, $0$, $1$, $9$ siempre cumplen $i < j < k < l$ porque están en posiciones consecutivas dentro del grupo.
+
+Además, podemos seleccionar los dígitos de diferentes grupos, siempre y cuando mantengamos $i \leq j \leq k \leq l$.
+
+**Reducción a combinatoria con repetición:**
+
+El problema se reduce a contar el número de cuádruplas $(i, j, k, l)$ donde $i$, $j$, $k$, $l$ son números enteros entre 1 y 2019 (los índices de los grupos) tales que:
+
+$$
+1 \leq i \leq j \leq k \leq l \leq 2019.
+$$
+
+Esto corresponde a contar el número de formas de seleccionar con reemplazo 4 elementos ordenados de un conjunto de 2019 elementos.
+
+El número de maneras de hacerlo es dado por la fórmula de combinaciones con repetición:
+
+$$
+\binom{n + r - 1}{r} = \binom{2019 + 4 - 1}{4} = \binom{2022}{4}.
+$$
+
+**Cálculo del número de combinaciones:**
+
+Calculamos $\binom{2022}{4}$:
+
+$$
+\binom{2022}{4} = \frac{2022 \times 2021 \times 2020 \times 2019}{4 \times 3 \times 2 \times 1} = \frac{2022 \times 2021 \times 2020 \times 2019}{24}.
+$$
+
+**Cálculo paso a paso:**
+
+1. Factorizamos numerador y denominador para simplificar:
+
+   - $2022 = 2 \times 3 \times 337$
+   - $2021 = 43 \times 47$
+   - $2020 = 2^2 \times 5 \times 101$
+   - $2019 = 3 \times 673$
+   - $24 = 2^3 \times 3$
+
+2. Simplificamos los factores comunes:
+
+   - Cancelamos $2^3$ y $3$ del denominador con factores del numerador.
+   - Después de simplificar, el numerador queda:
+
+     $$
+     2^{0} \times 3^{1} \times 5 \times 43 \times 47 \times 101 \times 337 \times 673.
+     $$
+
+3. Multiplicamos los factores restantes:
+
+   - $3 \times 5 = 15$
+   - $15 \times 43 = 645$
+   - $645 \times 47 = 30,\!315$
+   - $30,\!315 \times 101 = 3,\!061,\!815$
+   - $3,\!061,\!815 \times 337 = 1,\!031,\!831,\!655$
+   - $1,\!031,\!831,\!655 \times 673 = 694,\!422,\!703,\!815$
+
+**Respuesta final:**
+
+Hay **694,422,703,815** maneras de elegir un $2$, un $0$, un $1$ y un $9$ en ese orden en la secuencia dada.
+
+\end{solu}
+\end{problem}
+
+\begin{problem}
+Considera todos los puntos en el plano con coordenadas enteras no negativas. Inicialmente, hay un frijol en cada uno de los puntos $(0, 0)$, $(0, 1)$ y $(1, 0)$. En un paso, puedes quitar el frijol de la casilla $(x, y)$ y agregar un frijol en $(x, y+1)$ y en $(x+1, y)$ (solo puedes hacer el paso si las casillas donde vas a poner un frijol están vacías y la casilla $(x, y)$ tiene un frijol). Demuestra que después de una cantidad finita de pasos, debe haber un frijol en alguna de las casillas $(0, 0)$, $(0, 1)$ o $(1, 0)$.
+    
+\begin{hint}
+Considera asignar un peso a cada casilla $(x, y)$, por ejemplo, $w(x, y) = 2^{-x - y}$. Observa cómo este peso total se conserva durante las operaciones y cómo esto puede implicar que siempre debe haber un frijol en una de las casillas iniciales.
+
+\begin{solu}
+\textbf{Solución:}
+
+Asignemos a cada casilla $(x, y)$ un peso $w(x, y) = 2^{-x - y}$. 
+
+**Paso 1: Verificar que el peso total se conserva**
+
+Inicialmente, el peso total es:
+
+$$
+W_{\text{inicial}} = w(0,0) + w(0,1) + w(1,0) = 2^{-(0+0)} + 2^{-(0+1)} + 2^{-(1+0)} = 1 + \frac{1}{2} + \frac{1}{2} = 2.
+$$
+
+Ahora, consideremos lo que sucede cuando realizamos un movimiento:
+
+- Quitamos el frijol de $(x, y)$, disminuyendo el peso total en $w(x, y) = 2^{-x - y}$.
+- Agregamos frijoles en $(x+1, y)$ y en $(x, y+1)$, aumentando el peso total en $w(x+1, y) + w(x, y+1) = 2^{-(x+1) - y} + 2^{-x - (y+1)}$.
+
+Sumamos las ganancias y pérdidas:
+
+$$
+\Delta W = [2^{-(x+1) - y} + 2^{-x - (y+1)}] - 2^{-x - y} = [2^{-x - y - 1} + 2^{-x - y - 1}] - 2^{-x - y} = 2 \times 2^{-x - y - 1} - 2^{-x - y} = 0.
+$$
+
+Por lo tanto, el peso total se conserva en cada movimiento.
+
+**Paso 2: Analizar el peso mínimo posible**
+
+Notemos que todos los pesos $w(x, y)$ son positivos y decrecen exponencialmente conforme $x$ y $y$ aumentan.
+
+Supongamos, con el fin de obtener una contradicción, que en algún momento no hay frijoles en las casillas $(0, 0)$, $(0, 1)$ y $(1, 0)$.
+
+Entonces, el peso total sería:
+
+$$
+W_{\text{nuevo}} = W_{\text{inicial}} - [w(0,0) + w(0,1) + w(1,0)] = 2 - \left(1 + \tfrac{1}{2} + \tfrac{1}{2}\right) = 0.
+$$
+
+Pero como los pesos de las demás casillas son positivos, el peso total no puede ser cero a menos que no haya frijoles en ninguna casilla, lo cual no es posible porque el peso total se conserva y siempre es 2.
+
+**Paso 3: Conclusión**
+
+Dado que el peso total siempre es 2 y los pesos de las casillas son positivos, debe existir al menos un frijol en alguna de las casillas iniciales $(0, 0)$, $(0, 1)$ o $(1, 0)$ en cualquier momento del proceso.
+
+Por lo tanto, después de cualquier cantidad finita de pasos, siempre habrá un frijol en al menos una de estas casillas.
+
+\end{solu}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+En Minecraft, una casilla se vuelve agua si y solo si al menos dos de las casillas adyacentes son agua. Tienes una alberca de $20 \times 20$. ¿Cuál es la menor cantidad de casillas que tienes que llenar de agua inicialmente para que la alberca se llene completa?
+
+\begin{hint}
+Observa que una casilla necesita al menos dos casillas adyacentes con agua para volverse agua. Considera colocar agua inicial en posiciones estratégicas que maximicen el número de casillas que pueden volverse agua en cada paso. Piensa en utilizar filas y columnas adyacentes para asegurar que las casillas tengan suficientes adyacentes con agua.
+
+\begin{solu}
+\textbf{Solución:}
+
+El objetivo es encontrar la mínima cantidad de casillas iniciales con agua que, siguiendo las reglas del juego, logren que toda la alberca de $20 \times 20$ se llene de agua.
+
+**Observaciones clave:**
+
+- Cada casilla del tablero tiene hasta 4 casillas adyacentes (arriba, abajo, izquierda y derecha).
+- Una casilla se vuelve agua si y solo si al menos \textbf{dos} de sus casillas adyacentes son agua.
+- Las casillas en los bordes y esquinas tienen menos adyacentes.
+
+**Estrategia:**
+
+Para minimizar el número de casillas iniciales, necesitamos asegurar que la propagación del agua sea eficiente. Una forma efectiva es colocar agua en dos filas o dos columnas adyacentes, de modo que las casillas vecinas tengan suficientes adyacentes con agua para cumplir la condición.
+
+**Paso 1: Colocar agua en dos filas adyacentes**
+
+Supongamos que colocamos agua en todas las casillas de las filas $y = 1$ y $y = 2$ (las dos primeras filas):
+
+- Número de casillas iniciales con agua: $20 \times 2 = 40$.
+
+**Paso 2: Propagación del agua**
+
+- **En el siguiente paso**, las casillas en la fila $y = 3$ tendrán dos casillas adyacentes con agua (las casillas directamente arriba en $y = 2$ y las casillas a los lados en $y = 3$, que todavía no son agua).
+- Sin embargo, como las casillas a los lados en $y = 3$ aún no son agua, no pueden contribuir a que una casilla se vuelva agua en este paso.
+- Esto implica que solo las casillas en las columnas de los extremos (donde las casillas tienen menos adyacentes) no podrán convertirse en agua inmediatamente.
+
+**Paso 3: Continuar la propagación**
+
+- **Paso a paso**, las casillas en filas superiores irán teniendo suficientes adyacentes con agua a medida que el agua se propaga.
+- Eventualmente, todas las casillas del tablero se llenarán de agua.
+
+**Comprobación de la eficiencia**
+
+- **Casillas en filas $y \geq 3$**:
+  - Una vez que las casillas en $y = 3$ se vuelven agua, contribuyen a que las casillas en $y = 4$ tengan dos adyacentes con agua (de $y = 3$ y $y = 2$).
+  - Este proceso continúa hasta la fila $y = 20$.
+
+**Conclusión:**
+
+La menor cantidad de casillas iniciales que necesitamos llenar de agua es **40**, ubicadas en dos filas adyacentes (por ejemplo, $y = 1$ y $y = 2$). Esto asegura que cada casilla en filas superiores eventualmente tenga al menos dos adyacentes con agua y, por lo tanto, se convierta en agua.
+
+**Nota adicional:**
+
+- También podríamos lograr el mismo efecto colocando agua en dos columnas adyacentes (por ejemplo, $x = 1$ y $x = 2$).
+- Cualquier configuración que garantice que las casillas adyacentes tengan suficientes vecinos con agua puede ser válida, siempre y cuando minimice el número de casillas iniciales.
+
+\end{solu}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+Determina la mayor cantidad de reyes que puedes poner en un tablero de ajedrez ($8 \times 8$) de tal manera que cada rey ataque a menos de dos reyes.
+
+\begin{hint}
+Considera dividir el tablero en bloques de $2 \times 2$ y colocar reyes en posiciones específicas dentro de estos bloques. Analiza cómo colocar los reyes para maximizar su número mientras se asegura que cada rey ataque a menos de dos reyes. Piensa en cómo los reyes pueden atacar dentro de estos bloques y cómo evitar que ataquen a más de un rey.
+
+\begin{solu}
+\textbf{Solución:}
+
+**Paso 1: Determinar una configuración óptima**
+
+Dividimos el tablero de ajedrez de $8 \times 8$ en $16$ bloques de $2 \times 2$.
+
+En cada bloque de $2 \times 2$, numeramos las casillas de la siguiente manera:
+
+\[
+\begin{array}{|c|c|}
+\hline
+(a) & (b) \\
+\hline
+(c) & (d) \\
+\hline
+\end{array}
+\]
+
+Colocamos reyes en las posiciones $(a)$ y $(d)$ de cada bloque. Esto significa que en cada bloque habrá dos reyes ubicados en casillas opuestas.
+
+**Visualización:**
+
+Por ejemplo, en el primer bloque, las casillas corresponden a las coordenadas:
+
+- $(a)$: fila $1$, columna $1$
+- $(b)$: fila $1$, columna $2$
+- $(c)$: fila $2$, columna $1$
+- $(d)$: fila $2$, columna $2$
+
+Colocamos reyes en las posiciones $(1,1)$ y $(2,2)$.
+
+**Paso 2: Verificar que cada rey ataca a menos de dos reyes**
+
+En este arreglo:
+
+- Dentro de cada bloque de $2 \times 2$, los dos reyes colocados en $(a)$ y $(d)$ son adyacentes diagonalmente y, por lo tanto, se atacan entre sí.
+- Fuera de este bloque, los reyes no atacan a ningún otro rey porque están separados por al menos una casilla.
+
+Por lo tanto, cada rey ataca exactamente a un solo rey (el que está en su bloque) y no ataca a ningún otro rey en el tablero.
+
+**Paso 3: Calcular la cantidad total de reyes**
+
+- Hay $16$ bloques de $2 \times 2$ en el tablero de $8 \times 8$.
+- En cada bloque, colocamos $2$ reyes.
+- Total de reyes: $16 \times 2 = 32$.
+
+**Paso 4: Demostrar que 32 es el número máximo**
+
+Supongamos que es posible colocar más de $32$ reyes cumpliendo la condición de que cada rey ataque a menos de dos reyes.
+
+- Cada vez que dos reyes se atacan, forman una pareja donde cada uno ataca al otro.
+- Para minimizar el número de ataques y maximizar el número de reyes, debemos organizar los reyes en pares donde cada rey ataca solo a su pareja.
+
+El número máximo de pares disjuntos en el tablero es $16$, ya que el tablero tiene $64$ casillas y cada par ocupa $2$ casillas.
+
+- Si intentamos agregar más reyes, necesariamente algún rey tendrá que atacar a más de un rey, lo cual viola la condición del problema.
+
+**Conclusión:**
+
+La mayor cantidad de reyes que se pueden colocar en un tablero de $8 \times 8$ sin que ningún rey ataque a más de un rey es **32**.
+
+\end{solu}
+\end{hint}
+\end{problem}
+
+\begin{problem}
+En una cuadrícula de $n \times n$ se escriben los números del $1$ al $n^2$ en orden, de tal manera que en el primer renglón aparecen los números del $1$ al $n$ en orden de izquierda a derecha, en el segundo renglón los números del $n+1$ al $2n$, y así sucesivamente. Una operación consiste en escoger dos cuadritos que compartan un lado y sumarles el mismo número (puede ser negativo). 
+
+Encuentra todos los valores de $n$ tales que es posible que después de una cantidad finita de operaciones, todos los cuadritos tengan escrito el número 0. En los casos en los que es posible, determina la mínima cantidad de operaciones necesarias.
+
+\begin{hint}
+Para resolver este problema, considera modelarlo mediante un sistema de ecuaciones lineales. Cada operación afecta a dos cuadritos adyacentes sumándoles el mismo número. Nuestro objetivo es encontrar una combinación de operaciones que permita llevar todos los números a cero.
+
+Observa que la paridad del total de la suma de los números en la cuadrícula influye en la posibilidad de alcanzar todos ceros. Analiza cómo las operaciones afectan la suma total y determina para qué valores de $n$ es posible alcanzar la configuración deseada.
+
+\begin{solu}
+\textbf{Solución:}
+
+**Paso 1: Analizar la posibilidad según el valor de $n$**
+
+Primero, notemos que cada operación consiste en sumar el mismo número a dos cuadritos adyacentes. Por lo tanto, el efecto en la suma total de los números de la cuadrícula es aumentar o disminuir en múltiplos de $2$ (ya que sumamos el número dos veces).
+
+Calculamos la suma total inicial de los números en la cuadrícula:
+
+$$
+S = \sum_{k=1}^{n^2} k = \frac{n^2(n^2 + 1)}{2}
+$$
+
+Analicemos la paridad de $S$:
+
+- Si $n$ es \textbf{impar}, entonces $n^2$ es impar, y por tanto $n^2 + 1$ es par. Por lo tanto, $n^2(n^2 + 1)$ es producto de impar por par, que es par, y al dividir entre $2$, $S$ es un número entero \textbf{par}.
+
+- Si $n$ es \textbf{par}, entonces $n^2$ es par, y $n^2 + 1$ es impar. Entonces, $n^2(n^2 + 1)$ es par por impar, que es par, y al dividir entre $2$, $S$ es un número entero \textbf{par}.
+
+En ambos casos, $S$ es un número entero \textbf{par}.
+
+Sin embargo, al revisar los cálculos con números específicos, encontramos un error en este razonamiento. Veamos ejemplos:
+
+- Para $n = 1$:
+  $$
+  S = \frac{1^2 (1^2 + 1)}{2} = \frac{1 \times 2}{2} = 1
+  $$
+  $S$ es \textbf{impar}.
+
+- Para $n = 2$:
+  $$
+  S = \frac{2^2 (2^2 + 1)}{2} = \frac{4 \times 5}{2} = 10
+  $$
+  $S$ es \textbf{par}.
+
+- Para $n = 3$:
+  $$
+  S = \frac{9 \times 10}{2} = 45
+  $$
+  $S$ es \textbf{impar}.
+
+Observamos que cuando $n$ es \textbf{impar}, $S$ es \textbf{impar}, y cuando $n$ es \textbf{par}, $S$ es \textbf{par}.
+
+Las operaciones sólo pueden cambiar la suma total en múltiplos de $2$. Por lo tanto, si la suma total inicial es \textbf{impar}, no es posible llegar a una suma total de cero (que es par) mediante las operaciones permitidas.
+
+**Conclusión sobre los valores de $n$:**
+
+- Si $n$ es \textbf{par}, $S$ es \textbf{par}, y es posible alcanzar todos ceros.
+- Si $n$ es \textbf{impar}, $S$ es \textbf{impar}, y no es posible alcanzar todos ceros.
+
+**Paso 2: Determinar la estrategia para $n$ par**
+
+Ahora, para $n$ \textbf{par}, diseñaremos una estrategia para transformar todos los números a cero utilizando las operaciones permitidas.
+
+**Estrategia:**
+
+1. **Operaciones en filas:**
+
+   - Recorremos cada fila del tablero.
+   - En cada fila $i$, para cada par de cuadritos adyacentes en columnas $j$ y $j+1$, aplicamos una operación para ajustar sus valores.
+
+2. **Operaciones en columnas:**
+
+   - Recorremos cada columna del tablero.
+   - En cada columna $j$, para cada par de cuadritos adyacentes en filas $i$ y $i+1$, aplicamos una operación para ajustar sus valores.
+
+Sin embargo, debemos especificar cómo realizar estas operaciones para lograr que todos los cuadritos lleguen a cero.
+
+**Procedimiento detallado:**
+
+- **Paso 1:** Inicialmente, consideramos los cuadritos en posiciones $(i, j)$, donde $i$ y $j$ son las coordenadas de fila y columna respectivamente.
+
+- **Paso 2:** Definimos variables $d_{i,j}$ que representan el número que sumaremos al cuadrito en la posición $(i, j)$.
+
+- **Paso 3:** Nuestro objetivo es encontrar valores $d_{i,j}$ tales que:
+
+  $$
+  x_{i,j} + d_{i,j} + d_{i,j+1} + d_{i+1,j} + d_{i-1,j} + d_{i,j-1} = 0
+  $$
+
+  Sin embargo, esto puede complicarse debido a la cantidad de variables e interdependencias.
+
+**Simplificación utilizando grafos:**
+
+El problema puede modelarse mediante un sistema de ecuaciones lineales, donde cada ecuación representa un cuadrito, y las variables son las operaciones que aplicamos.
+
+Sin embargo, una manera más sencilla es considerar que, dado que podemos sumar cualquier número (positivo o negativo) a cada par de cuadritos adyacentes, tenemos suficiente libertad para ajustar los valores individuales.
+
+**Solución constructiva:**
+
+- **Paso 1:** Asignamos a cada cuadrito un valor que es la negación de su valor inicial.
+
+- **Paso 2:** Para cada par de cuadritos adyacentes, calculamos la mitad de la suma de sus valores (esto es posible porque $n$ es par y la suma total es par).
+
+- **Paso 3:** Definimos las operaciones necesarias:
+
+  - Para cada par de cuadritos adyacentes $(i, j)$ y $(i, j+1)$ en una fila, aplicamos una operación que suma $-\frac{x_{i,j} + x_{i,j+1}}{2}$ a ambos cuadritos.
+
+  - Repetimos el proceso para pares de cuadritos adyacentes en columnas.
+
+**Número mínimo de operaciones:**
+
+- El número de operaciones necesarias es igual al número de pares de cuadritos adyacentes.
+- En una cuadrícula de $n \times n$, hay:
+
+  - $(n-1) \times n$ pares horizontales.
+  - $n \times (n-1)$ pares verticales.
+  - Total de operaciones: $2n(n - 1)$.
+
+Sin embargo, es posible optimizar el número de operaciones.
+
+**Optimización:**
+
+- Podemos observar que el sistema de ecuaciones que representa el problema tiene un \textbf{rango máximo de $n^2 - 1$}, lo que implica que hay una variable libre.
+- Por lo tanto, el número mínimo de operaciones necesarias es $n^2 - 1$.
+
+**Conclusión:**
+
+- Para \textbf{todo $n$ par}, es posible transformar todos los números de la cuadrícula a cero utilizando las operaciones permitidas.
+- El número mínimo de operaciones necesarias es $n^2 - 1$.
+
+\end{solu}
+\end{hint}
+\end{problem}
+
+\Closesolutionfile{all-hints}
+
+\section{Sugerencias y Soluciones}
+\begin{enumerate}
+\input{all-hints.out}
+\end{enumerate}
+
+\end{document}

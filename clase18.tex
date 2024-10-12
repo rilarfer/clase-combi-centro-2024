@@ -1,0 +1,136 @@
+\documentclass[11pt]{scrartcl}
+\usepackage[sexy]{evan}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\graphicspath{ {./images/} }
+
+\usepackage{answers}
+\Newassociation{hint}{hintitem}{all-hints}
+\Newassociation{solu}{solutionitem}{all-solutions}
+\renewcommand{\solutionextension}{out}
+\renewenvironment{hintitem}[1]{\item[\bfseries #1.]}{}
+\renewenvironment{solutionitem}[1]{\item[\bfseries #1.]}{}
+
+\usepackage{venndiagram,multicol,hyperref,graphicx,array,xskak}
+\usepackage{tikz}
+\usetikzlibrary{positioning,trees}
+
+\begin{document}
+\title{Conteo}
+\author{Ricardo Largaespada}
+\date{28 Septiembre 2024}
+
+\maketitle
+
+\section{Problemas Propuestos}
+
+\Opensolutionfile{all-hints}
+
+\begin{problem}[AMC 2010]
+Bernardo selecciona aleatoriamente 3 números distintos del conjunto \{1, 2, 3, 4, 5, 6, 7, 8, 9\} y los ordena en orden descendente para formar un número de 3 dígitos. Silvia selecciona aleatoriamente 3 números distintos del conjunto \{1, 2, 3, 4, 5, 6, 7, 8\} y también los ordena en orden descendente para formar un número de 3 dígitos. ¿Cuál es la probabilidad de que el número de Bernardo sea mayor que el número de Silvia?
+\begin{hint}
+\textbf{Repuesta.} La probabilidad es \( \frac{37}{56} \).\\
+Considera la cantidad total de combinaciones posibles para ambos y calcula la probabilidad comparativa.
+\end{hint}
+\end{problem}
+
+\begin{problem}[AMC 2010]
+\begin{itemize}
+\item[a.] Una hormiga se encuentra en el punto (0, 0) en el plano de coordenadas. Necesita llegar al punto (3, 4). Solo puede moverse a lo largo de las líneas de la cuadrícula y solo puede moverse hacia arriba o hacia la derecha. ¿De cuántas maneras puede llegar al punto (3, 4)?
+
+\item[b.] Un camino de 16 pasos va de (-4, -4) a (4, 4) con cada paso aumentando la coordenada \( x \) o la coordenada \( y \) en 1. ¿Cuántos de estos caminos permanecen dentro o en la frontera del cuadrado \(-2 \le x \le 2\), \(-2 \le y \le 2\) en cada paso?
+\end{itemize}
+\begin{hint}
+\textbf{Respuesta.} El número de caminos es \( 1698 \).\\
+
+a. Utiliza combinatoria básica para determinar cuántas secuencias de movimientos existen.
+
+b. Considera caminos restringidos y usa técnicas de caminatas aleatorias para resolver la parte b.
+\end{hint}
+\end{problem}
+
+\begin{problem}[AMC 2010]
+Las entradas en una matriz \(3 \times 3\) contienen todos los dígitos del 1 al 9, organizados de manera que cada fila y columna estén en orden creciente. ¿Cuántas de estas matrices existen?
+\begin{hint}
+\textbf{Respuesta.} Existen \( 42 \) matrices de este tipo.\\
+Considera las permutaciones de los números y luego analiza cómo organizar las filas y columnas en orden.
+\end{hint}
+\end{problem}
+
+\begin{problem}[AIME 2004]
+Una secuencia se define de la siguiente manera: \( a_1 = a_2 = a_3 = 1 \) y, para todos los enteros positivos \( n \), \( a_{n+3} = a_{n+2} + a_{n+1} + a_n \). Se da que \( a_{28} = 6090307 \), \( a_{29} = 11201821 \) y \( a_{30} = 20603361 \). Encuentra el residuo cuando \( \sum_{k=1}^{28} a_k \) es dividido por 1000.
+\begin{hint}
+\textbf{Respuesta.} El residuo es \( 834\). \\
+Analiza la recurrencia para obtener una fórmula general, y luego suma los primeros 28 términos.
+\end{hint}
+\end{problem}
+
+\begin{problem}[AIME 2006]
+Una colección de 8 cubos consiste en un solo cubo con longitud de arista \( k \) para cada entero \( k, 1 \leq k \leq 8 \). Se debe construir una torre con todos los 8 cubos de acuerdo con las siguientes reglas:
+   
+(a) Cualquier cubo puede ser la base de la torre.
+
+(b) El cubo inmediatamente superior a la base debe tener una longitud de arista de \( k \) de al menos \( k + 2 \).
+
+Sea \( T \) el número de diferentes torres que se pueden construir. ¿Cuál es el residuo cuando \( T \) es dividido por 1000?
+\begin{hint}
+\textbf{Respuesta.} El residuo es \( 458 \).\\
+Usa combinatoria y análisis de restricciones para calcular todas las torres posibles.
+\end{hint}
+\end{problem}
+
+\begin{problem}[AIME 2007]
+Sea \( S \) un conjunto con seis elementos. Sea \( P \) el conjunto de todos los subconjuntos de \( S \). Los subconjuntos \( A \) y \( B \) de \( S \), no necesariamente distintos, se eligen independientemente y al azar de \( P \). ¿Cuál es la probabilidad de que \( B \) esté contenido en al menos uno de \( A \) o \( S - A \)? (El conjunto \( S - A \) es el conjunto de todos los elementos de \( S \) que no están en \( A \).)
+\begin{hint}
+\textbf{Respuesta.} \( 710 \).\\
+Analiza las propiedades de subconjuntos y calcula las probabilidades.
+\end{hint}
+\end{problem}
+
+\begin{problem}[AIME 2010]
+Sea \( N \) el número de maneras de escribir 2010 en la forma \( a_3 \cdot 10^3 + a_2 \cdot 10^2 + a_1 \cdot 10 + a_0 \), donde \( a_i \) son enteros y \( 0 \leq a_i \leq 99 \). Encuentra \( N \).
+\begin{hint}
+\textbf{Respuesta.} \( 202 \).\\
+
+Descompón 2010 en sus dígitos y considera combinaciones posibles.
+\end{hint}
+\end{problem}
+
+\begin{problem}[AIME 2011]
+Ed tiene cinco canicas verdes idénticas y una gran cantidad de canicas rojas idénticas. Ordena las canicas verdes y algunas de las canicas rojas en una fila y encuentra que el número de canicas cuya vecina a la derecha es del mismo color que ellas es igual al número de canicas cuya vecina a la derecha es de otro color. Sea \( m \) el número máximo de canicas rojas que Ed puede usar en dicho arreglo, y sea \( N \) el número de maneras en las que Ed puede organizar las \( m + 5 \) canicas para satisfacer el requisito. Encuentra el residuo cuando \( N \) es dividido por 1000.
+\begin{hint}
+\textbf{Respuesta.} El residuo es \( 3 \).\\
+
+Utiliza combinatoria de colores y restricciones para determinar la cantidad máxima de canicas rojas.
+\end{hint}
+\end{problem}
+
+\begin{problem}[AIME 2011]
+a. Diez personas están numeradas del 1 al 10 y deben sentarse en sillas numeradas del 1 al 10 (de modo que a cada persona se le asigne una silla específica). ¿Cuántas formas existen para que las personas se sienten de modo que ninguna persona se siente en la silla que se le asignó?
+
+b. Nueve delegados, tres de cada uno de tres países diferentes, eligen aleatoriamente asientos en una mesa redonda con nueve sillas. Sea \( \frac{m}{n} \) la probabilidad de que cada delegado se siente junto a al menos un delegado de otro país, donde \( m \) y \( n \) son enteros primos relativos. Encuentra \( m + n \).
+\begin{hint}
+a. Usa el principio de inclusión y exclusión para calcular la cantidad total.
+
+b. \textbf{Respuesta.} \( 97 \).\\
+Considera las posiciones alrededor de la mesa y las restricciones de los países.
+\end{hint}
+\end{problem}
+
+\begin{problem}[AIME 2011]
+Seis hombres y algunas mujeres están en fila en orden aleatorio. Sea \( p \) la probabilidad de que un grupo de al menos cuatro hombres esté junto en la fila, dado que cada hombre está junto a al menos otro hombre. Encuentra el número mínimo de mujeres en la fila tal que \( p \) no exceda el 1\%.
+\begin{hint}
+\textbf{Respuesta.} \( 594 \).\\
+
+Considera la probabilidad condicional y calcula el número mínimo necesario.
+\end{hint}
+\end{problem}
+
+\Closesolutionfile{all-hints}
+
+\section{Sugerencias y Soluciones}
+\begin{enumerate}
+\input{all-hints.out}
+\end{enumerate}
+
+\end{document}
